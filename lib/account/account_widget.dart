@@ -1,4 +1,4 @@
-import 'package:exstudio/favorites/animated_toggle_buttom.dart';
+import 'package:exstudio/account/animated_toggle_buttom.dart';
 import 'package:exstudio/flutter_flow/flutter_flow_theme.dart';
 import 'package:exstudio/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';

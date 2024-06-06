@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:exstudio/favorites/favorites_widget.dart';
+import 'package:exstudio/account/account_widget.dart';
 import 'package:exstudio/flutter_flow/flutter_flow_theme.dart';
 import 'package:exstudio/flutter_flow/nav/nav.dart';
 import 'package:exstudio/home/home_widget.dart';
@@ -32,7 +32,7 @@ class _NavBarPageState extends State<NavBarWidget> {
     _tabs = {
       'Home': HomeWidget(),
       'Profile': ProfileWidget(),
-      'Favorites': FavoritesWidget(),
+      'Account': FavoritesWidget(),
     };
 
     _currentPageName = widget.initialPage;

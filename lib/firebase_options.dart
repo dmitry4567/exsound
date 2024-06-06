@@ -17,10 +17,7 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      throw UnsupportedError(
-        'DefaultFirebaseOptions have not been configured for web - '
-        'you can reconfigure this by running the FlutterFire CLI again.',
-      );
+      return web;
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -28,15 +25,9 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return macos;
       case TargetPlatform.windows:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for windows - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return windows;
       case TargetPlatform.linux:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for linux - '
@@ -50,19 +41,49 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCnoCvoVRBRKItg2-xiHq6SA08OTBedNUk',
-    appId: '1:569390148555:android:9efec8e62feae99831644e',
-    messagingSenderId: '569390148555',
-    projectId: 'fpoint-976d9',
-    storageBucket: 'fpoint-976d9.appspot.com',
+    apiKey: 'AIzaSyBuHngR6qkmzqoPnCg7C_EQlxHX2ijSdB0',
+    appId: '1:805115852281:android:ca357cc95c6bf98b7ab928',
+    messagingSenderId: '805115852281',
+    projectId: 'studioback',
+    storageBucket: 'studioback.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyCxn6rsKCGAdel1VylyRXq5h-y4uz76XRE',
-    appId: '1:569390148555:ios:b71bc85b2b084ff831644e',
-    messagingSenderId: '569390148555',
-    projectId: 'fpoint-976d9',
-    storageBucket: 'fpoint-976d9.appspot.com',
-    iosBundleId: 'com.example.chApp',
+    apiKey: 'AIzaSyCwD8y7R_dM3tm0tptl7XILvHZX7VpxyoY',
+    appId: '1:805115852281:ios:3f69ac7dbcd553ad7ab928',
+    messagingSenderId: '805115852281',
+    projectId: 'studioback',
+    storageBucket: 'studioback.appspot.com',
+    iosBundleId: 'com.example.exstudio',
   );
+
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyDjy0A2EY6_m0TPAw058eSQxH2ZVY4i-mA',
+    appId: '1:805115852281:web:e9a1dde2ba7183ad7ab928',
+    messagingSenderId: '805115852281',
+    projectId: 'studioback',
+    authDomain: 'studioback.firebaseapp.com',
+    storageBucket: 'studioback.appspot.com',
+    measurementId: 'G-PEBVHCWV39',
+  );
+
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: 'AIzaSyCwD8y7R_dM3tm0tptl7XILvHZX7VpxyoY',
+    appId: '1:805115852281:ios:3f69ac7dbcd553ad7ab928',
+    messagingSenderId: '805115852281',
+    projectId: 'studioback',
+    storageBucket: 'studioback.appspot.com',
+    iosBundleId: 'com.example.exstudio',
+  );
+
+  static const FirebaseOptions windows = FirebaseOptions(
+    apiKey: 'AIzaSyDjy0A2EY6_m0TPAw058eSQxH2ZVY4i-mA',
+    appId: '1:805115852281:web:d9219b2eeea8e4b57ab928',
+    messagingSenderId: '805115852281',
+    projectId: 'studioback',
+    authDomain: 'studioback.firebaseapp.com',
+    storageBucket: 'studioback.appspot.com',
+    measurementId: 'G-NKKEDB7TX5',
+  );
+
 }

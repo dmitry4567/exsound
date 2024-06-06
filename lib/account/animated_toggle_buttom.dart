@@ -1,3 +1,5 @@
+import 'dart:developer';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 
 class AnimatedToggleButton extends StatefulWidget {
@@ -8,10 +10,26 @@ class AnimatedToggleButton extends StatefulWidget {
 class _AnimatedToggleButtonState extends State<AnimatedToggleButton> {
   bool _isOn = false;
 
-  void _toggleButton() {
+  void _toggleButton() async {
     setState(() {
       _isOn = !_isOn;
     });
+    if (_isOn) {
+      final notificationSettings =
+          await FirebaseMessaging.instance.requestPermission(provisional: true);
+          
+      await FirebaseMessaging.instance.setAutoInitEnabled(true);
+
+      String? deviceToken = await FirebaseMessaging.instance.getToken();
+
+      log(deviceToken.toString());
+
+      final apnsToken = await FirebaseMessaging.instance.getAPNSToken();
+
+      if (apnsToken != null) {
+        log(apnsToken);
+      }
+    }
   }
 
   @override

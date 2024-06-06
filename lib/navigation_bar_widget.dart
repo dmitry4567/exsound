@@ -5,6 +5,7 @@ import 'package:exstudio/flutter_flow/nav/nav.dart';
 import 'package:exstudio/home/home_widget.dart';
 import 'package:exstudio/profile/profile_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 class NavBarWidget extends StatefulWidget {
   const NavBarWidget({
@@ -45,10 +46,6 @@ class _NavBarPageState extends State<NavBarWidget> {
       body: _tabs[_currentPageName],
       extendBody: true,
       bottomNavigationBar: ClipRRect(
-        borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(20),
-          topRight: Radius.circular(20),
-        ),
         child: Theme(
           data: ThemeData(
             splashColor: Colors.transparent,
@@ -61,7 +58,7 @@ class _NavBarPageState extends State<NavBarWidget> {
             selectedItemColor:
                 FlutterFlowTheme.of(context).selectedBottomItemColor,
             type: BottomNavigationBarType.fixed,
-            unselectedItemColor: Colors.white60,
+            unselectedItemColor: FlutterFlowTheme.of(context).primaryColor,
             currentIndex: currentIndex,
             showUnselectedLabels: false,
             showSelectedLabels: false,
@@ -72,38 +69,37 @@ class _NavBarPageState extends State<NavBarWidget> {
                 });
               }
             },
-            items: const [
+            items: [
+              BottomNavigationBarItem(
+                icon: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.schedule,
+                    ),
+                  ],
+                ),
+                label: "",
+              ),
+              BottomNavigationBarItem(
+                icon: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.add,
+                      size: 32,
+                    ),
+                  ],
+                ),
+                label: "",
+              ),
               BottomNavigationBarItem(
                 icon: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Icon(
                       Icons.person_outline,
-                      size: 26,
-                    ),
-                  ],
-                ),
-                label: "",
-              ),
-              BottomNavigationBarItem(
-                icon: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.search,
-                      size: 26,
-                    ),
-                  ],
-                ),
-                label: "",
-              ),
-              BottomNavigationBarItem(
-                icon: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.favorite_border_outlined,
-                      size: 26,
+                      size: 28,
                     ),
                   ],
                 ),

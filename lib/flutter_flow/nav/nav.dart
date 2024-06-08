@@ -52,10 +52,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
                   const NavBarWidget(initialPage: 'Home'),
             ),
             FFRoute(
-              name: 'Favotrites',
-              path: 'favotrites',
+              name: 'Account',
+              path: 'account',
               builder: (context, params) =>
-                  const NavBarWidget(initialPage: 'Favotrites'),
+                  const NavBarWidget(initialPage: 'Account'),
             ),
             FFRoute(
               name: 'Project',

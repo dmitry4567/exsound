@@ -1,6 +1,7 @@
 import 'package:exstudio/sign_in/bloc/login_bloc.dart';
 import 'package:exstudio/sign_up/bloc/register_bloc.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -29,6 +30,20 @@ Future<void> main() async {
     FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
     return true;
   };
+
+  FirebaseMessaging messaging = FirebaseMessaging.instance;
+
+  messaging.getToken().then((value) {
+    print("Firebase Messaging Token: $value");
+  });
+
+  FirebaseMessaging.onMessage.listen((RemoteMessage event) {
+    print("message received: ${event}");
+  });
+
+  FirebaseMessaging.onMessageOpenedApp.listen((message) {
+    print('Message clicked: ${message}');
+  });
 
   runApp(const MyApp());
 }

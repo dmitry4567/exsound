@@ -15,21 +15,21 @@ class _AnimatedToggleButtonState extends State<AnimatedToggleButton> {
       _isOn = !_isOn;
     });
     if (_isOn) {
-      final notificationSettings =
-          await FirebaseMessaging.instance.requestPermission(provisional: true);
-          
+      final notificationSettings = await FirebaseMessaging.instance
+          .requestPermission(provisional: false);
+
       await FirebaseMessaging.instance.setAutoInitEnabled(true);
 
       String? deviceToken = await FirebaseMessaging.instance.getToken();
 
       log(deviceToken.toString());
 
-      final apnsToken = await FirebaseMessaging.instance.getAPNSToken();
+      // final apnsToken = await FirebaseMessaging.instance.getAPNSToken();
 
-      if (apnsToken != null) {
-        log(apnsToken);
-      }
-    }
+      // if (apnsToken != null) {
+      //   log(apnsToken);
+      // }
+    } else {}
   }
 
   @override

@@ -1,7 +1,8 @@
+import 'package:exstudio/backend/api_requests/api_calls.dart';
+import 'package:exstudio/backend/api_requests/api_manager.dart';
 import 'package:exstudio/flutter_flow/flutter_flow_util.dart';
+import 'package:exstudio/shedule/model/studio_session_model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:scope_function/scope_function.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class SheduleWidget extends StatefulWidget {
@@ -16,6 +17,36 @@ class _SheduleWidgetState extends State<SheduleWidget> {
   DateTime _focusedDay = DateTime.now();
   DateTime _selectedDay = DateTime.now();
   CalendarFormat _calendarFormat = CalendarFormat.month;
+
+  Future<StudioSessions> fetchData() async {
+    final fromValue = DateTime.now().millisecondsSinceEpoch;
+    final tempTime = DateTime.fromMillisecondsSinceEpoch(fromValue);
+
+    final fromTime = DateTime(
+      tempTime.year,
+      tempTime.month,
+      tempTime.day,
+    ).millisecondsSinceEpoch;
+    final toTime = DateTime(
+          tempTime.year,
+          tempTime.month,
+          tempTime.day,
+        ).add(Duration(days: 1)).millisecondsSinceEpoch -
+        1;
+
+    final sessions = await GetSessionsByTimePeriod.call(
+      from: fromTime,
+      until: toTime,
+    );
+
+    return StudioSessions.fromJson(sessions.jsonBody);
+  }
+
+  void initState() {
+    super.initState();
+    final data = fetchData();
+    print(data);
+  }
 
   @override
   Widget build(BuildContext context) {

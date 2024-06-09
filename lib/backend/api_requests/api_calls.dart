@@ -7,7 +7,7 @@ export 'api_manager.dart' show ApiCallResponse;
 
 final dioClient = Dio(
   BaseOptions(
-    baseUrl: "https://935a-87-117-52-6.ngrok-free.app/api",
+    baseUrl: "http://192.168.0.109:3000/api",
     connectTimeout: 30000,
     receiveTimeout: 3000,
   ),
@@ -90,67 +90,19 @@ class SignUpCall {
   }
 }
 
-class GetAllProject {
+class GetSessionsByTimePeriod {
   static Future<ApiCallResponse> call({
-    String? token = '',
-  }) {
-    // final body = '''
-    // {
-    //   "token": "$token"
-    // }''';
-    final body = '''
-    {
-      "start_id": 0
-    }''';
-
-    return ApiManager.instance.makeApiCall(
-      apiPath: '/project/all',
-      callType: ApiCallType.POST,
-      params: {},
-      body: body,
-      bodyType: BodyType.JSON,
-      returnBody: true,
-      dioClient: dioClient,
-    );
-  }
-}
-
-class LikeProject {
-  static Future<ApiCallResponse> call({
-    String? token = '',
-    int? id,
+    int from = 0,
+    int until = 0,
   }) {
     final body = '''
     {
-      "token": "$token",
-      "projectId": $id
+      "from": 0,
+      "until": 1
     }''';
 
     return ApiManager.instance.makeApiCall(
-      apiPath: '/like/like',
-      callType: ApiCallType.POST,
-      params: {},
-      body: body,
-      bodyType: BodyType.JSON,
-      returnBody: true,
-      dioClient: dioClient,
-    );
-  }
-}
-
-class UnLikeProject {
-  static Future<ApiCallResponse> call({
-    String? token = '',
-    int? id,
-  }) {
-    final body = '''
-    {
-      "token": "$token",
-      "projectId": $id
-    }''';
-
-    return ApiManager.instance.makeApiCall(
-      apiPath: '/like/unlike',
+      apiPath: '/studio-sessions/findByTimePeriod',
       callType: ApiCallType.POST,
       params: {},
       body: body,

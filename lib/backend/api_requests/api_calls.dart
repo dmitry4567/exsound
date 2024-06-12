@@ -7,7 +7,7 @@ export 'api_manager.dart' show ApiCallResponse;
 
 final dioClient = Dio(
   BaseOptions(
-    baseUrl: "http://192.168.0.109:3000/api",
+    baseUrl: "https://66b8-5-139-112-208.ngrok-free.app/api",
     connectTimeout: 30000,
     receiveTimeout: 3000,
   ),
@@ -22,18 +22,18 @@ final dioClient = Dio(
       return handler.next(options);
     },
     onResponse: (e, handler) async {
-      if (e.data["status"] == 401) {
-        // If a 401 response is received, refresh the access token
-        await ApiManager.refresh(it);
+      // if (e.data["status"] == 401) {
+      //   // If a 401 response is received, refresh the access token
+      //   await ApiManager.refresh(it);
 
-        // Update the request header with the new access token
-        Map<String, dynamic> temp = jsonDecode(e.requestOptions.data);
-        temp['token'] = ffAppState.userAuthToken;
-        e.requestOptions.data = temp;
+      //   // Update the request header with the new access token
+      //   Map<String, dynamic> temp = jsonDecode(e.requestOptions.data);
+      //   temp['token'] = ffAppState.userAuthToken;
+      //   e.requestOptions.data = temp;
 
-        // Repeat the request with the updated header
-        return handler.resolve(await it.fetch(e.requestOptions));
-      }
+      //   // Repeat the request with the updated header
+      //   return handler.resolve(await it.fetch(e.requestOptions));
+      // }
 
       return handler.next(e);
     },
@@ -97,8 +97,8 @@ class GetSessionsByTimePeriod {
   }) {
     final body = '''
     {
-      "from": 0,
-      "until": 1
+      "from": $from,
+      "until": $until
     }''';
 
     return ApiManager.instance.makeApiCall(

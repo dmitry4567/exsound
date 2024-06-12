@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:core';
+import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:exstudio/flutter_flow/flutter_flow_util.dart';
 import 'package:exstudio/main.dart';
@@ -32,17 +33,18 @@ class ApiCallResponse {
     Response<dynamic> response,
     bool returnBody,
   ) async {
-    Map<String, dynamic>? jsonBody;
+    List<dynamic>? jsonBody;
 
     try {
-      jsonBody = returnBody ? jsonDecode(jsonEncode(response.data)) : null;
-      return ApiCallResponse(jsonBody, response.headers, getJsonField(jsonBody, r'''$.status''') ?? response.statusCode);
+      jsonBody = returnBody ? response.data : null;
+      return ApiCallResponse(jsonBody, response.headers, response.statusCode!);
     } catch (_) {
       return ApiCallResponse(null, Headers(), 400);
     }
   }
 
-  static ApiCallResponse fromCloudCallResponse(Map<String, dynamic> response) => ApiCallResponse(
+  static ApiCallResponse fromCloudCallResponse(Map<String, dynamic> response) =>
+      ApiCallResponse(
         response['body'],
         Headers.fromMap(response['headers'] ?? {}),
         response['statusCode'] ?? 400,
@@ -58,7 +60,8 @@ class ApiManager {
   static Future refresh(Dio dioClient) async {
     var pathToFunction = '/refreshToken';
 
-    var result = await dioClient.post(pathToFunction, data: '''{"refresh_token": "${ffAppState.refreshToken}"}''');
+    var result = await dioClient.post(pathToFunction,
+        data: '''{"refresh_token": "${ffAppState.refreshToken}"}''');
 
     Map<String, dynamic> data = jsonDecode(jsonEncode(result.data));
     if (data['status'] == 200) {
@@ -68,9 +71,11 @@ class ApiManager {
     }
   }
 
-  static Map<String, String> toStringMap(Map map) => map.map((key, value) => MapEntry(key.toString(), value.toString()));
+  static Map<String, String> toStringMap(Map map) =>
+      map.map((key, value) => MapEntry(key.toString(), value.toString()));
 
-  static String asQueryParams(Map<String, dynamic> map) => map.entries.map((e) => "${e.key}=${e.value}").join('&');
+  static String asQueryParams(Map<String, dynamic> map) =>
+      map.entries.map((e) => "${e.key}=${e.value}").join('&');
 
   static Future<ApiCallResponse> urlRequest(
     ApiCallType callType,
@@ -82,9 +87,11 @@ class ApiManager {
     if (params.isNotEmpty) {
       final lastUriPart = pathToFunction.split('/').last;
       final needsParamSpecifier = !lastUriPart.contains('?');
-      pathToFunction = '$pathToFunction${needsParamSpecifier ? '?' : ''}${asQueryParams(params)}';
+      pathToFunction =
+          '$pathToFunction${needsParamSpecifier ? '?' : ''}${asQueryParams(params)}';
     }
-    final makeRequest = callType == ApiCallType.GET ? dioClient.get : dioClient.delete;
+    final makeRequest =
+        callType == ApiCallType.GET ? dioClient.get : dioClient.delete;
     final response = await makeRequest(pathToFunction);
     return ApiCallResponse.fromHttpResponse(
       response,

@@ -1,5 +1,10 @@
+import 'dart:developer';
+import 'dart:ffi';
+
+import 'package:flutter_svg/svg.dart';
+
+import '../../flutter_flow/custom_functions.dart' as functions;
 import 'package:exstudio/backend/api_requests/api_calls.dart';
-import 'package:exstudio/backend/api_requests/api_manager.dart';
 import 'package:exstudio/flutter_flow/flutter_flow_util.dart';
 import 'package:exstudio/shedule/model/studio_session_model.dart';
 import 'package:flutter/material.dart';
@@ -13,12 +18,16 @@ class SheduleWidget extends StatefulWidget {
 }
 
 class _SheduleWidgetState extends State<SheduleWidget> {
+  final formatter = DateFormat('HH:mm');
+
+  int startOfMonth = DateTime.now().month;
+
   DateTime selectedDate = DateTime.now();
   DateTime _focusedDay = DateTime.now();
   DateTime _selectedDay = DateTime.now();
   CalendarFormat _calendarFormat = CalendarFormat.month;
 
-  Future<StudioSessions> fetchData() async {
+  Future<dynamic> getData() async {
     final fromValue = DateTime.now().millisecondsSinceEpoch;
     final tempTime = DateTime.fromMillisecondsSinceEpoch(fromValue);
 
@@ -39,13 +48,13 @@ class _SheduleWidgetState extends State<SheduleWidget> {
       until: toTime,
     );
 
-    return StudioSessions.fromJson(sessions.jsonBody);
-  }
+    if (sessions.succeeded) {
+      return sessions.jsonBody
+          .map((project) => StudioSessions.fromJson(project))
+          .toList();
+    }
 
-  void initState() {
-    super.initState();
-    final data = fetchData();
-    print(data);
+    return null;
   }
 
   @override
@@ -196,115 +205,174 @@ class _SheduleWidgetState extends State<SheduleWidget> {
                         ),
                       ),
                       SizedBox(height: 16),
-                      ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: 5,
-                        physics: ClampingScrollPhysics(),
-                        itemBuilder: (context, index) {
-                          return Container(
-                            margin: EdgeInsets.only(bottom: 20),
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                width: 1,
-                                color: Color(0xffCBD4DD),
-                              ),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(6)),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        'Сведение',
-                                        style: TextStyle(
-                                          fontFamily: 'BebasNeue',
-                                          color: Color(0xFF000000),
-                                          fontSize: 29,
-                                          fontWeight: FontWeight.normal,
+                      FutureBuilder<dynamic>(
+                        future: getData(),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return const Center(
+                              child: CircularProgressIndicator(
+                                  color: Color(0xff8D40FF)),
+                            );
+                          } else if (snapshot.hasError) {
+                            return Center(
+                                child: Text('Error: ${snapshot.error}'));
+                          } else {
+                            return snapshot.data.isEmpty
+                                ? Center(
+                                    child: Column(
+                                      children: [
+                                        SvgPicture.asset(
+                                            "assets/icons/volume.svg"),
+                                        SizedBox(height: 15),
+                                        Text(
+                                          "на этот день пусто",
+                                          style: TextStyle(
+                                            fontFamily: 'BebasNeue',
+                                            color: Color(0xFF9EADBD),
+                                            fontSize: 30,
+                                            fontWeight: FontWeight.normal,
+                                          ),
                                         ),
-                                      ),
-                                      Text(
-                                        '18:40-19:00',
-                                        style: TextStyle(
-                                          fontFamily: 'BebasNeue',
-                                          color: Color(0xFF000000),
-                                          fontSize: 29,
-                                          fontWeight: FontWeight.normal,
+                                      ],
+                                    ),
+                                  )
+                                : ListView.builder(
+                                    shrinkWrap: true,
+                                    itemCount: snapshot.data.length,
+                                    physics: ClampingScrollPhysics(),
+                                    itemBuilder: (context, index) {
+                                      return Container(
+                                        margin: EdgeInsets.only(bottom: 20),
+                                        decoration: BoxDecoration(
+                                          border: Border.all(
+                                            width: 1,
+                                            color: Color(0xffCBD4DD),
+                                          ),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(6)),
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                  Text(
-                                    "Ice",
-                                    style: TextStyle(
-                                      fontFamily: 'BebasNeue',
-                                      color: Color(0xFF9EADBD),
-                                      fontSize: 20,
-                                      height: 1,
-                                      fontWeight: FontWeight.normal,
-                                    ),
-                                  ),
-                                  SizedBox(height: 18),
-                                  Text(
-                                    "Админы",
-                                    style: TextStyle(
-                                      fontFamily: 'Inter',
-                                      color: Color(0xFF9EADBD),
-                                      fontSize: 13,
-                                      height: 1,
-                                      fontWeight: FontWeight.normal,
-                                    ),
-                                  ),
-                                  SizedBox(height: 12),
-                                  Container(
-                                    child: ListView.builder(
-                                      itemCount: 2,
-                                      shrinkWrap: true,
-                                      itemBuilder: (context, index) {
-                                        return Padding(
-                                          padding:
-                                              const EdgeInsets.only(bottom: 6),
-                                          child: Row(
+                                        child: Padding(
+                                          padding: const EdgeInsets.fromLTRB(
+                                              16, 8, 16, 0),
+                                          child: Column(
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
                                             children: [
-                                              Container(
-                                                width: 18,
-                                                height: 18,
-                                                margin:
-                                                    EdgeInsets.only(right: 4),
-                                                decoration: BoxDecoration(
-                                                  color: Color(0xff8D40FF),
-                                                  shape: BoxShape.circle,
-                                                ),
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Text(
+                                                    snapshot.data[index]
+                                                        .typeOfActivity.name,
+                                                    style: TextStyle(
+                                                      fontFamily: 'BebasNeue',
+                                                      color: Color(0xFF000000),
+                                                      fontSize: 29,
+                                                      fontWeight:
+                                                          FontWeight.normal,
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    '${formatter.format(snapshot.data[index].from)}-${formatter.format(snapshot.data[index].until)}',
+                                                    style: TextStyle(
+                                                      fontFamily: 'BebasNeue',
+                                                      color: Color(0xFF000000),
+                                                      fontSize: 29,
+                                                      fontWeight:
+                                                          FontWeight.normal,
+                                                    ),
+                                                  ),
+                                                ],
                                               ),
                                               Text(
-                                                'smokeynagato',
+                                                snapshot.data[index].nameTrack,
                                                 style: TextStyle(
                                                   fontFamily: 'BebasNeue',
-                                                  color: Color(0xFF000000),
-                                                  fontSize: 22,
-                                                  height: 0.99,
+                                                  color: Color(0xFF9EADBD),
+                                                  fontSize: 20,
+                                                  height: 1,
                                                   fontWeight: FontWeight.normal,
                                                 ),
                                               ),
+                                              SizedBox(height: 18),
+                                              Text(
+                                                "Админы",
+                                                style: TextStyle(
+                                                  fontFamily: 'Inter',
+                                                  color: Color(0xFF9EADBD),
+                                                  fontSize: 13,
+                                                  height: 1,
+                                                  fontWeight: FontWeight.normal,
+                                                ),
+                                              ),
+                                              SizedBox(height: 12),
+                                              Container(
+                                                child: ListView.builder(
+                                                  itemCount: snapshot
+                                                      .data[index]
+                                                      .userAdmins
+                                                      .length,
+                                                  shrinkWrap: true,
+                                                  itemBuilder:
+                                                      (context, index2) {
+                                                    return Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              bottom: 6),
+                                                      child: Row(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Container(
+                                                            width: 18,
+                                                            height: 18,
+                                                            margin:
+                                                                EdgeInsets.only(
+                                                                    right: 4),
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              color: Color(
+                                                                  0xff8D40FF),
+                                                              shape: BoxShape
+                                                                  .circle,
+                                                            ),
+                                                          ),
+                                                          Text(
+                                                            snapshot
+                                                                .data[index]
+                                                                .userAdmins[
+                                                                    index2]
+                                                                .nickname,
+                                                            style: TextStyle(
+                                                              fontFamily:
+                                                                  'BebasNeue',
+                                                              color: Color(
+                                                                  0xFF000000),
+                                                              fontSize: 22,
+                                                              height: 0.99,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .normal,
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    );
+                                                  },
+                                                ),
+                                              ),
+                                              SizedBox(height: 12),
                                             ],
                                           ),
-                                        );
-                                      },
-                                    ),
-                                  ),
-                                  SizedBox(height: 12),
-                                ],
-                              ),
-                            ),
-                          );
+                                        ),
+                                      );
+                                    },
+                                  );
+                          }
                         },
                       ),
                     ],

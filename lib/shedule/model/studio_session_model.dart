@@ -1,28 +1,35 @@
 class StudioSessions {
   final int id;
   final String nameTrack;
-  final int from;
-  final int until;
-  // final TypeOfActivity typeOfActivity;
-  // final Users userAdmins;
-  // final Users userClients;
+  final DateTime from;
+  final DateTime until;
+  final TypeOfActivity typeOfActivity;
+  final List<User> userAdmins;
+  final List<User> userClients;
 
   const StudioSessions({
     required this.id,
     required this.nameTrack,
     required this.from,
     required this.until,
-    // required this.typeOfActivity,
-    // required this.userAdmins,
-    // required this.userClients,
+    required this.typeOfActivity,
+    required this.userAdmins,
+    required this.userClients,
   });
 
   factory StudioSessions.fromJson(Map<String, dynamic> json) {
     return StudioSessions(
       id: json['id'] as int,
       nameTrack: json['name_track'] as String,
-      from: json['from'] as int,
-      until: json['untill'] as int,
+      from: DateTime.parse(json['from']),
+      until: DateTime.parse(json['until']),
+      typeOfActivity: TypeOfActivity.fromJson(json['type_of_activity']),
+      userAdmins: List<User>.from(
+        json['user_admins'].map((user) => User.fromJson(user)),
+      ),
+      userClients: List<User>.from(
+        json['user_clients'].map((user) => User.fromJson(user)),
+      ),
     );
   }
 }
@@ -35,6 +42,23 @@ class TypeOfActivity {
   factory TypeOfActivity.fromJson(Map<String, dynamic> json) {
     return TypeOfActivity(
       name: json['name'] as String,
+    );
+  }
+}
+
+class User {
+  final int id;
+  final String nickname;
+
+  const User({
+    required this.id,
+    required this.nickname,
+  });
+
+  factory User.fromJson(Map<String, dynamic> json) {
+    return User(
+      id: json['id'] as int,
+      nickname: json['nickname'] as String,
     );
   }
 }

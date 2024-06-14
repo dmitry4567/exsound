@@ -7,7 +7,7 @@ export 'api_manager.dart' show ApiCallResponse;
 
 final dioClient = Dio(
   BaseOptions(
-    baseUrl: "https://d80c-5-139-112-208.ngrok-free.app/api",
+    baseUrl: "http://192.168.0.109:3000/api",
     connectTimeout: 30000,
     receiveTimeout: 3000,
   ),
@@ -15,9 +15,9 @@ final dioClient = Dio(
   it.interceptors.add(InterceptorsWrapper(
     onRequest: (options, handler) {
       // Add the access token to the request header
-      options.headers['Content-Type'] = 'application/json';
-      options.headers['apikey'] =
-          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.ewogICJyb2xlIjogImFub24iLAogICJpc3MiOiAic3VwYWJhc2UiLAogICJpYXQiOiAxNjkzNjg4NDAwLAogICJleHAiOiAxODUxNTQxMjAwCn0.Iy7uOckXLaFw7E0bXh94utCBkhj4irI07XUpJY3ZXK4';
+      // options.headers['Content-Type'] = 'application/json';
+      // options.headers['apikey'] =
+      //     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.ewogICJyb2xlIjogImFub24iLAogICJpc3MiOiAic3VwYWJhc2UiLAogICJpYXQiOiAxNjkzNjg4NDAwLAogICJleHAiOiAxODUxNTQxMjAwCn0.Iy7uOckXLaFw7E0bXh94utCBkhj4irI07XUpJY3ZXK4';
 
       return handler.next(options);
     },

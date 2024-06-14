@@ -24,7 +24,6 @@ class _SheduleWidgetState extends State<SheduleWidget> {
 
   int startOfMonth = DateTime.now().month;
 
-  DateTime selectedDate = DateTime.now();
   DateTime _focusedDay = DateTime.now();
   DateTime _selectedDay = DateTime.now();
   CalendarFormat _calendarFormat = CalendarFormat.month;
@@ -59,12 +58,16 @@ class _SheduleWidgetState extends State<SheduleWidget> {
     return null;
   }
 
+  @override
   void initState() {
     super.initState();
 
+    DateTime startDate =
+        DateTime(_selectedDay.year, _selectedDay.month, _selectedDay.day);
+
     context.read<ScheduleBloc>().add(ScheduleGetData(
-        selectedDate.millisecondsSinceEpoch,
-        selectedDate.add(Duration(days: 1)).millisecondsSinceEpoch - 1));
+        startDate.millisecondsSinceEpoch,
+        startDate.add(Duration(days: 1)).millisecondsSinceEpoch - 1));
   }
 
   @override

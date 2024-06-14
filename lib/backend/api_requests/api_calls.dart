@@ -7,7 +7,7 @@ export 'api_manager.dart' show ApiCallResponse;
 
 final dioClient = Dio(
   BaseOptions(
-    baseUrl: "https://66b8-5-139-112-208.ngrok-free.app/api",
+    baseUrl: "https://d80c-5-139-112-208.ngrok-free.app/api",
     connectTimeout: 30000,
     receiveTimeout: 3000,
   ),

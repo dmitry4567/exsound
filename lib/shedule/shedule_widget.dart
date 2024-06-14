@@ -1,10 +1,6 @@
-import 'dart:developer';
-import 'dart:ffi';
-
 import 'package:exstudio/shedule/bloc/schedule_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-
 import '../../flutter_flow/custom_functions.dart' as functions;
 import 'package:exstudio/backend/api_requests/api_calls.dart';
 import 'package:exstudio/flutter_flow/flutter_flow_util.dart';
@@ -21,12 +17,12 @@ class SheduleWidget extends StatefulWidget {
 
 class _SheduleWidgetState extends State<SheduleWidget> {
   final formatter = DateFormat('HH:mm');
+  List<int> session_days = [2, 3, 4, 10];
 
   int startOfMonth = DateTime.now().month;
 
   DateTime _focusedDay = DateTime.now();
   DateTime _selectedDay = DateTime.now();
-  CalendarFormat _calendarFormat = CalendarFormat.month;
 
   Future<dynamic> getData() async {
     final fromValue = DateTime.now().millisecondsSinceEpoch;
@@ -121,7 +117,7 @@ class _SheduleWidgetState extends State<SheduleWidget> {
                               firstDay: DateTime(1947),
                               lastDay: DateTime(2030),
                               focusedDay: _focusedDay,
-                              calendarFormat: _calendarFormat,
+                              calendarFormat: CalendarFormat.month,
                               selectedDayPredicate: (day) {
                                 return isSameDay(_selectedDay, day);
                               },
@@ -131,13 +127,7 @@ class _SheduleWidgetState extends State<SheduleWidget> {
                                     _selectedDay = selectedDay;
                                     _focusedDay = focusedDay;
                                   });
-                                  log(selectedDay.millisecondsSinceEpoch
-                                      .toString());
-                                  log((selectedDay
-                                              .add(Duration(days: 1))
-                                              .millisecondsSinceEpoch -
-                                          1)
-                                      .toString());
+
                                   context.read<ScheduleBloc>().add(
                                       ScheduleGetData(
                                           selectedDay.millisecondsSinceEpoch,
@@ -145,13 +135,6 @@ class _SheduleWidgetState extends State<SheduleWidget> {
                                                   .add(Duration(days: 1))
                                                   .millisecondsSinceEpoch -
                                               1));
-                                }
-                              },
-                              onFormatChanged: (format) {
-                                if (_calendarFormat != format) {
-                                  setState(() {
-                                    _calendarFormat = format;
-                                  });
                                 }
                               },
                               onPageChanged: (focusedDay) {
@@ -181,46 +164,127 @@ class _SheduleWidgetState extends State<SheduleWidget> {
                                 titleTextStyle: TextStyle(
                                   fontFamily: 'BebasNeue',
                                   color: Color(0xFF9EADBD),
-                                  fontWeight: FontWeight.w400,
+                                  fontWeight: FontWeight.w500,
                                   fontSize: 22,
                                 ),
                               ),
-                              calendarStyle: const CalendarStyle(
-                                outsideTextStyle: TextStyle(
-                                  fontFamily: 'BebasNeue',
-                                  color: Color(0xff9EADBD),
-                                  fontSize: 20,
-                                ),
-                                holidayTextStyle: TextStyle(
-                                  fontFamily: 'BebasNeue',
-                                  fontSize: 20,
-                                ),
-                                weekendTextStyle: TextStyle(
-                                  fontFamily: 'BebasNeue',
-                                  fontSize: 20,
-                                ),
-                                defaultTextStyle: TextStyle(
-                                  fontFamily: 'BebasNeue',
-                                  fontSize: 20,
-                                ),
-                                todayTextStyle: TextStyle(
-                                  fontFamily: 'BebasNeue',
-                                  fontSize: 20,
-                                  color: Color(0xff8D40FF),
-                                ),
-                                selectedTextStyle: TextStyle(
-                                  fontFamily: 'BebasNeue',
-                                  fontSize: 20,
-                                  color: Color(0xff8D40FF),
-                                ),
-                                selectedDecoration: BoxDecoration(
-                                  color: Color(0x338D40FF),
-                                  shape: BoxShape.circle,
-                                ),
-                                todayDecoration: BoxDecoration(
-                                  color: Colors.white,
-                                ),
+                              calendarBuilders: CalendarBuilders(
+                                outsideBuilder: (context, day, focusedDay) {
+                                  return Container(
+                                    width: 50,
+                                    height: 50,
+                                    alignment: Alignment.center,
+                                    decoration: BoxDecoration(
+                                      // color: Color(0x338D50FF),
+                                      shape: BoxShape.circle,
+                                    ),
+                                    child: Text(
+                                      day.day.toString(),
+                                      style: TextStyle(
+                                        fontFamily: 'BebasNeue',
+                                        color: session_days.contains(day.day)
+                                            ? Color(0x338D50FF).withOpacity(0.3)
+                                            : Color(0xff9EADBD),
+                                        fontSize: 20,
+                                      ),
+                                    ),
+                                  );
+                                },
+                                defaultBuilder: (context, day, focusedDay) {
+                                  return Container(
+                                    width: 50,
+                                    height: 50,
+                                    alignment: Alignment.center,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                    ),
+                                    child: Text(
+                                      day.day.toString(),
+                                      style: TextStyle(
+                                        fontFamily: 'BebasNeue',
+                                        color: session_days.contains(day.day)
+                                            ? Color(0xff8D50FF).withOpacity(0.6)
+                                            : Colors.black,
+                                        fontSize: 20,
+                                      ),
+                                    ),
+                                  );
+                                },
+                                selectedBuilder: (context, day, focusedDay) {
+                                  return Container(
+                                    width: 50,
+                                    height: 50,
+                                    alignment: Alignment.center,
+                                    decoration: BoxDecoration(
+                                      color: Color(0x338D50FF),
+                                      shape: BoxShape.circle,
+                                    ),
+                                    child: Text(
+                                      day.day.toString(),
+                                      style: TextStyle(
+                                        fontFamily: 'BebasNeue',
+                                        fontSize: 20,
+                                        color: Color(0xff8D50FF),
+                                      ),
+                                    ),
+                                  );
+                                },
+                                todayBuilder: (context, day, focusedDay) {
+                                  return Container(
+                                    width: 50,
+                                    height: 50,
+                                    alignment: Alignment.center,
+                                    decoration: BoxDecoration(
+                                      // color: Color(0x338D50FF),
+                                      shape: BoxShape.circle,
+                                    ),
+                                    child: Text(
+                                      day.day.toString(),
+                                      style: TextStyle(
+                                        fontFamily: 'BebasNeue',
+                                        fontSize: 20,
+                                        color: Color(0xff8D50FF),
+                                      ),
+                                    ),
+                                  );
+                                },
                               ),
+                              // calendarStyle: const CalendarStyle(
+                              //   outsideTextStyle: TextStyle(
+                              //     fontFamily: 'BebasNeue',
+                              //     color: Color(0xff9EADBD),
+                              //     fontSize: 20,
+                              //   ),
+                              //   holidayTextStyle: TextStyle(
+                              //     fontFamily: 'BebasNeue',
+                              //     fontSize: 20,
+                              //   ),
+                              //   weekendTextStyle: TextStyle(
+                              //     fontFamily: 'BebasNeue',
+                              //     fontSize: 20,
+                              //   ),
+                              //   defaultTextStyle: TextStyle(
+                              //     fontFamily: 'BebasNeue',
+                              //     fontSize: 20,
+                              //   ),
+                              //   todayTextStyle: TextStyle(
+                              //     fontFamily: 'BebasNeue',
+                              //     fontSize: 20,
+                              //     color: Color(0xff8D50FF),
+                              //   ),
+                              //   selectedTextStyle: TextStyle(
+                              //     fontFamily: 'BebasNeue',
+                              //     fontSize: 20,
+                              //     color: Color(0xff8D50FF),
+                              //   ),
+                              //   selectedDecoration: BoxDecoration(
+                              //     color: Color(0x338D50FF),
+                              //     shape: BoxShape.circle,
+                              //   ),
+                              //   todayDecoration: BoxDecoration(
+                              //     color: Colors.white,
+                              //   ),
+                              // ),
                             ),
                           ),
                         ),
@@ -336,7 +400,7 @@ class _SheduleWidgetState extends State<SheduleWidget> {
                                                         decoration:
                                                             BoxDecoration(
                                                           color:
-                                                              Color(0xff8D40FF),
+                                                              Color(0xff8D50FF),
                                                           shape:
                                                               BoxShape.circle,
                                                         ),
@@ -373,7 +437,7 @@ class _SheduleWidgetState extends State<SheduleWidget> {
                             } else if (state is ScheduleGettingData) {
                               return Center(
                                 child: CircularProgressIndicator(
-                                  color: Color(0xff8D40FF),
+                                  color: Color(0xff8D50FF),
                                 ),
                               );
                             } else if (state is ScheduleDataEmpty) {
@@ -395,7 +459,7 @@ class _SheduleWidgetState extends State<SheduleWidget> {
                                 ),
                               );
                             }
-                            return Text("fsef");
+                            return Text("Ошибка получения данных");
                           },
                         ),
                       ],

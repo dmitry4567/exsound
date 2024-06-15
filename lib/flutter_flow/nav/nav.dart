@@ -22,7 +22,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       initialLocation: (FFAppState().userAuthToken == "") ? "/" : '/',
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
-      errorBuilder: (context, _) => const NavBarWidget(initialPage: 'Project'),
+      errorBuilder: (context, _) => const NavBarWidget(initialPage: 'Home'),
       routes: [
         FFRoute(
           name: 'SignIn',
@@ -56,12 +56,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               path: 'account',
               builder: (context, params) =>
                   const NavBarWidget(initialPage: 'Account'),
-            ),
-            FFRoute(
-              name: 'Project',
-              path: 'project',
-              builder: (context, params) =>
-                  const NavBarWidget(initialPage: 'Project'),
             ),
           ]
               .map(

@@ -4,14 +4,14 @@ import 'package:exstudio/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-class FavoritesWidget extends StatefulWidget {
-  const FavoritesWidget({super.key});
+class AccountWidget extends StatefulWidget {
+  const AccountWidget({super.key});
 
   @override
-  State<FavoritesWidget> createState() => _FavoritesWidgetState();
+  State<AccountWidget> createState() => _AccountWidgetState();
 }
 
-class _FavoritesWidgetState extends State<FavoritesWidget> {
+class _AccountWidgetState extends State<AccountWidget> {
   void _showDialog({
     required BuildContext context,
     required String text,

@@ -92,7 +92,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       ],
       child: MaterialApp.router(
           routerConfig: _router,
-          title: 'RUPL',
+          title: 'ExStudio',
           localizationsDelegates: const [
             FFLocalizationsDelegate(),
             GlobalMaterialLocalizations.delegate,

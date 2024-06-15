@@ -394,8 +394,10 @@ class _SheduleWidgetState extends State<SheduleWidget> {
                                   ],
                                 ),
                               );
+                            } else if (state is ScheduleError) {
+                              return Text("Ошибка получения данных");
                             }
-                            return Text("fsef");
+                            return Container();
                           },
                         ),
                       ],

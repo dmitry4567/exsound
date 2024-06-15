@@ -7,7 +7,7 @@ export 'api_manager.dart' show ApiCallResponse;
 
 final dioClient = Dio(
   BaseOptions(
-    baseUrl: "https://935a-87-117-52-6.ngrok-free.app/api",
+    baseUrl: "http://192.168.0.109:3000/api",
     connectTimeout: 30000,
     receiveTimeout: 3000,
   ),
@@ -15,25 +15,25 @@ final dioClient = Dio(
   it.interceptors.add(InterceptorsWrapper(
     onRequest: (options, handler) {
       // Add the access token to the request header
-      options.headers['Content-Type'] = 'application/json';
-      options.headers['apikey'] =
-          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.ewogICJyb2xlIjogImFub24iLAogICJpc3MiOiAic3VwYWJhc2UiLAogICJpYXQiOiAxNjkzNjg4NDAwLAogICJleHAiOiAxODUxNTQxMjAwCn0.Iy7uOckXLaFw7E0bXh94utCBkhj4irI07XUpJY3ZXK4';
+      // options.headers['Content-Type'] = 'application/json';
+      // options.headers['apikey'] =
+      //     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.ewogICJyb2xlIjogImFub24iLAogICJpc3MiOiAic3VwYWJhc2UiLAogICJpYXQiOiAxNjkzNjg4NDAwLAogICJleHAiOiAxODUxNTQxMjAwCn0.Iy7uOckXLaFw7E0bXh94utCBkhj4irI07XUpJY3ZXK4';
 
       return handler.next(options);
     },
     onResponse: (e, handler) async {
-      if (e.data["status"] == 401) {
-        // If a 401 response is received, refresh the access token
-        await ApiManager.refresh(it);
+      // if (e.data["status"] == 401) {
+      //   // If a 401 response is received, refresh the access token
+      //   await ApiManager.refresh(it);
 
-        // Update the request header with the new access token
-        Map<String, dynamic> temp = jsonDecode(e.requestOptions.data);
-        temp['token'] = ffAppState.userAuthToken;
-        e.requestOptions.data = temp;
+      //   // Update the request header with the new access token
+      //   Map<String, dynamic> temp = jsonDecode(e.requestOptions.data);
+      //   temp['token'] = ffAppState.userAuthToken;
+      //   e.requestOptions.data = temp;
 
-        // Repeat the request with the updated header
-        return handler.resolve(await it.fetch(e.requestOptions));
-      }
+      //   // Repeat the request with the updated header
+      //   return handler.resolve(await it.fetch(e.requestOptions));
+      // }
 
       return handler.next(e);
     },
@@ -90,67 +90,19 @@ class SignUpCall {
   }
 }
 
-class GetAllProject {
+class GetSessionsByTimePeriod {
   static Future<ApiCallResponse> call({
-    String? token = '',
-  }) {
-    // final body = '''
-    // {
-    //   "token": "$token"
-    // }''';
-    final body = '''
-    {
-      "start_id": 0
-    }''';
-
-    return ApiManager.instance.makeApiCall(
-      apiPath: '/project/all',
-      callType: ApiCallType.POST,
-      params: {},
-      body: body,
-      bodyType: BodyType.JSON,
-      returnBody: true,
-      dioClient: dioClient,
-    );
-  }
-}
-
-class LikeProject {
-  static Future<ApiCallResponse> call({
-    String? token = '',
-    int? id,
+    int from = 0,
+    int until = 0,
   }) {
     final body = '''
     {
-      "token": "$token",
-      "projectId": $id
+      "from": $from,
+      "until": $until
     }''';
 
     return ApiManager.instance.makeApiCall(
-      apiPath: '/like/like',
-      callType: ApiCallType.POST,
-      params: {},
-      body: body,
-      bodyType: BodyType.JSON,
-      returnBody: true,
-      dioClient: dioClient,
-    );
-  }
-}
-
-class UnLikeProject {
-  static Future<ApiCallResponse> call({
-    String? token = '',
-    int? id,
-  }) {
-    final body = '''
-    {
-      "token": "$token",
-      "projectId": $id
-    }''';
-
-    return ApiManager.instance.makeApiCall(
-      apiPath: '/like/unlike',
+      apiPath: '/studio-sessions/findByTimePeriod',
       callType: ApiCallType.POST,
       params: {},
       body: body,

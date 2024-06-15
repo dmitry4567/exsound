@@ -1,8 +1,8 @@
 import 'package:exstudio/account/account_widget.dart';
 import 'package:exstudio/flutter_flow/flutter_flow_theme.dart';
 import 'package:exstudio/flutter_flow/nav/nav.dart';
-import 'package:exstudio/home/home_widget.dart';
 import 'package:exstudio/profile/profile_widget.dart';
+import 'package:exstudio/shedule/shedule_widget.dart';
 import 'package:flutter/material.dart';
 
 class NavBarWidget extends StatefulWidget {
@@ -28,7 +28,7 @@ class _NavBarPageState extends State<NavBarWidget> {
     super.initState();
 
     _tabs = {
-      'Home': HomeWidget(),
+      'Home': SheduleWidget(),
       'Profile': ProfileWidget(),
       'Account': FavoritesWidget(),
     };

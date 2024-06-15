@@ -40,10 +40,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, _) => const NavBarWidget(initialPage: 'Home'),
           routes: [
             FFRoute(
-              name: 'Profile',
-              path: 'profile',
+              name: 'Shedule',
+              path: 'shedule',
               builder: (context, params) =>
-                  const NavBarWidget(initialPage: 'Profile'),
+                  const NavBarWidget(initialPage: 'Shedule'),
             ),
             FFRoute(
               name: 'Home',

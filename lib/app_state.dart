@@ -56,9 +56,9 @@ class FFAppState {
     return _userAuthToken;
   }
 
-  set userAuthToken(String value) {
+  Future<void> setUserAuthToken(String value) async {
     _userAuthToken = value;
-    prefs.setString("ff_user_auth_token", value);
+    await prefs.setString("ff_user_auth_token", value);
   }
 
   String _refreshToken = "";
@@ -67,9 +67,9 @@ class FFAppState {
     return _refreshToken;
   }
 
-  set refreshToken(String value) {
+  Future<void> setRefreshToken(String value) async {
     _refreshToken = value;
-    prefs.setString("ff_refresh_token", value);
+    await prefs.setString("ff_refresh_token", value);
   }
 
   FlutterSecureStorage secureStorage = const FlutterSecureStorage();

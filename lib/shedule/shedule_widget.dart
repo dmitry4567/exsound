@@ -1,10 +1,6 @@
-import 'dart:developer';
-import 'dart:ffi';
-
 import 'package:exstudio/shedule/bloc/schedule_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-
 import '../../flutter_flow/custom_functions.dart' as functions;
 import 'package:exstudio/backend/api_requests/api_calls.dart';
 import 'package:exstudio/flutter_flow/flutter_flow_util.dart';
@@ -131,13 +127,7 @@ class _SheduleWidgetState extends State<SheduleWidget> {
                                     _selectedDay = selectedDay;
                                     _focusedDay = focusedDay;
                                   });
-                                  log(selectedDay.millisecondsSinceEpoch
-                                      .toString());
-                                  log((selectedDay
-                                              .add(Duration(days: 1))
-                                              .millisecondsSinceEpoch -
-                                          1)
-                                      .toString());
+
                                   context.read<ScheduleBloc>().add(
                                       ScheduleGetData(
                                           selectedDay.millisecondsSinceEpoch,

@@ -1,35 +1,57 @@
 import 'dart:developer';
+import 'package:exstudio/backend/api_requests/api_calls.dart';
+import 'package:exstudio/flutter_flow/flutter_flow_util.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 
 class AnimatedToggleButton extends StatefulWidget {
+  bool isOn;
+
+  AnimatedToggleButton(this.isOn);
+
   @override
   _AnimatedToggleButtonState createState() => _AnimatedToggleButtonState();
 }
 
 class _AnimatedToggleButtonState extends State<AnimatedToggleButton> {
-  bool _isOn = false;
-
   void _toggleButton() async {
-    setState(() {
-      _isOn = !_isOn;
-    });
-    if (_isOn) {
+    if (widget.isOn) {
+      String? deviceToken = await FirebaseMessaging.instance.getToken();
+
+      if (deviceToken != null) {
+        log(deviceToken);
+
+        final notification = await SubscribeNotification.call(
+          token: FFAppState().userAuthToken,
+          deviceToken: deviceToken,
+        );
+
+        if (notification.succeeded) {
+          setState(() {
+            widget.isOn = !widget.isOn;
+          });
+        }
+      }
+    } else {
       final notificationSettings = await FirebaseMessaging.instance
           .requestPermission(provisional: false);
 
       await FirebaseMessaging.instance.setAutoInitEnabled(true);
-
       String? deviceToken = await FirebaseMessaging.instance.getToken();
 
-      log(deviceToken.toString());
+      if (deviceToken != null) {
+        final notification = await SubscribeNotification.call(
+          token: FFAppState().userAuthToken,
+          deviceToken: deviceToken,
+        );
 
-      // final apnsToken = await FirebaseMessaging.instance.getAPNSToken();
-
-      // if (apnsToken != null) {
-      //   log(apnsToken);
-      // }
-    } else {}
+        if (notification.succeeded) {
+          setState(() {
+            widget.isOn = !widget.isOn;
+          });
+        }
+      }
+    }
   }
 
   @override
@@ -42,18 +64,18 @@ class _AnimatedToggleButtonState extends State<AnimatedToggleButton> {
         height: 24.0,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20.0),
-          color: _isOn ? Colors.green : Colors.grey,
+          color: widget.isOn ? Colors.green : Colors.grey,
         ),
         child: Stack(
           children: [
             AnimatedPositioned(
               duration: Duration(milliseconds: 200),
               curve: Curves.easeInOut,
-              left: _isOn ? 15.0 : 0.0,
-              right: _isOn ? 0.0 : 24.0,
+              left: widget.isOn ? 15.0 : 0.0,
+              right: widget.isOn ? 0.0 : 24.0,
               child: AnimatedSwitcher(
                 duration: Duration(milliseconds: 200),
-                child: _isOn
+                child: widget.isOn
                     ? Icon(
                         Icons.circle,
                         color: Colors.white,

@@ -23,8 +23,8 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
         (register.jsonBody ?? ''),
         r'''$.status''',
       ))) {
-        ffAppState.userAuthToken =
-            getJsonField(register.jsonBody ?? '', r'''$.access_token''');
+        ffAppState.setUserAuthToken(
+            getJsonField(register.jsonBody ?? '', r'''$.access_token'''));
         emit(const RegisterPass());
       } else {
         emit(RegisterError(

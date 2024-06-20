@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:core';
 import 'dart:developer';
+import 'dart:ffi';
 import 'package:dio/dio.dart';
 import 'package:exstudio/flutter_flow/flutter_flow_util.dart';
 import 'package:exstudio/main.dart';
@@ -33,7 +34,7 @@ class ApiCallResponse {
     Response<dynamic> response,
     bool returnBody,
   ) async {
-    List<dynamic>? jsonBody;
+    dynamic jsonBody;
 
     try {
       jsonBody = returnBody ? response.data : null;
@@ -56,20 +57,6 @@ class ApiManager {
 
   static ApiManager? _instance;
   static ApiManager get instance => _instance ??= ApiManager._();
-
-  static Future refresh(Dio dioClient) async {
-    var pathToFunction = '/refreshToken';
-
-    var result = await dioClient.post(pathToFunction,
-        data: '''{"refresh_token": "${ffAppState.refreshToken}"}''');
-
-    Map<String, dynamic> data = jsonDecode(jsonEncode(result.data));
-    if (data['status'] == 200) {
-      var tempData = data['data'];
-      ffAppState.userAuthToken = tempData["access_token"];
-      ffAppState.refreshToken = tempData["refresh_token"];
-    }
-  }
 
   static Map<String, String> toStringMap(Map map) =>
       map.map((key, value) => MapEntry(key.toString(), value.toString()));
@@ -121,10 +108,9 @@ class ApiManager {
         returnBody,
       );
     } on DioError catch (e) {
-      print(e.message);
+      ApiCallResponse("", Headers(), e.response!.statusCode!);
     }
-
-    return ApiCallResponse("", Headers(), 200);
+    return ApiCallResponse("", Headers(), 100);
   }
 
   static dynamic createBody(

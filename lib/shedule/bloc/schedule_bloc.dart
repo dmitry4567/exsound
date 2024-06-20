@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:exstudio/app_state.dart';
 import 'package:exstudio/backend/api_requests/api_calls.dart';
 import 'package:exstudio/shedule/model/studio_session_model.dart';
 
@@ -10,7 +11,9 @@ class ScheduleBloc extends Bloc<ScheduleEvent, ScheduleState> {
   ScheduleBloc() : super(ScheduleInitial()) {
     on<ScheduleGetData>((event, emit) async {
       emit(const ScheduleGettingData());
+
       ApiCallResponse data = await GetSessionsByTimePeriod.call(
+        token: FFAppState().userAuthToken,
         from: event.from,
         until: event.until,
       );

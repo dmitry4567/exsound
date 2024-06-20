@@ -1,3 +1,4 @@
+import 'package:exstudio/account/bloc/account_bloc.dart';
 import 'package:exstudio/shedule/bloc/schedule_bloc.dart';
 import 'package:exstudio/sign_in/bloc/login_bloc.dart';
 import 'package:exstudio/sign_up/bloc/register_bloc.dart';
@@ -88,7 +89,8 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       providers: [
         BlocProvider(create: (_) => LoginBloc()),
         BlocProvider(create: (_) => RegisterBloc()),
-        BlocProvider(create: (_) => ScheduleBloc())
+        BlocProvider(create: (_) => ScheduleBloc()),
+        BlocProvider(create: (_) => AccountBloc())
       ],
       child: MaterialApp.router(
           routerConfig: _router,

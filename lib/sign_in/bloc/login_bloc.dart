@@ -1,9 +1,10 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:exstudio/backend/api_requests/api_calls.dart';
 import 'package:exstudio/flutter_flow/flutter_flow_util.dart';
 import 'package:exstudio/main.dart';
 import 'package:equatable/equatable.dart';
-import '../../flutter_flow/custom_functions.dart' as functions;
 
 part 'login_event.dart';
 part 'login_state.dart';
@@ -17,12 +18,13 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         password: event.password,
       );
 
-      if (functions.resultCodeSuccess(getJsonField(
-        (login.jsonBody ?? ''),
-        r'''$.status''',
-      ))) {
-        ffAppState.userAuthToken =
-            getJsonField(login.jsonBody ?? '', r'''$.access_token''');
+      if (login.succeeded) {
+        await ffAppState.setRefreshToken(
+            getJsonField(login.jsonBody ?? '', r'''$.refresh_token'''));
+
+        await ffAppState.setUserAuthToken(
+            getJsonField(login.jsonBody ?? '', r'''$.access_token'''));
+
         emit(const LoginPass());
       } else {
         emit(LoginError(

@@ -75,4 +75,6 @@ class FFAppState {
   FlutterSecureStorage secureStorage = const FlutterSecureStorage();
 
   List<dynamic> workoutResults = [];
+
+  bool get privacyLicenseBool => false;
 }

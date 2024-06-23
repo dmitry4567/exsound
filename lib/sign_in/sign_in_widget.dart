@@ -69,169 +69,157 @@ class _SignInWidgetState extends State<SignInWidget> {
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
                   children: [
-                    const Text(
+                    Text(
                       'Авторизация',
                       style: TextStyle(
-                        color: Color(0xff252B37),
-                        fontSize: 36,
-                        fontFamily: "RobotoFlex",
-                        fontWeight: FontWeight.w500,
-                        height: 1.0,
+                        fontFamily: 'BebasNeue',
+                        color: Color(0xFF000000),
+                        fontSize: 35,
+                        fontWeight: FontWeight.normal,
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 20),
-                      child: Container(
-                        width: double.infinity,
-                        height: 56,
-                        decoration: BoxDecoration(
-                          color:
-                              FlutterFlowTheme.of(context).secondaryBackground,
-                          borderRadius: BorderRadius.circular(16),
-                        ),
-                        child: Align(
-                          alignment: const AlignmentDirectional(0, 0),
-                          child: TextFormField(
-                            controller: textController1,
-                            autofocus: true,
-                            obscureText: false,
-                            decoration: InputDecoration(
-                              hintText: 'E-mail',
-                              hintStyle: TextStyle(
-                                color: const Color(0xff252B37).withOpacity(0.2),
-                                fontSize: 16,
-                                fontFamily: 'RobotoFlex',
-                                fontWeight: FontWeight.w400,
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color:
-                                      const Color(0xff252B37).withOpacity(0.2),
-                                  width: 1,
-                                ),
-                                borderRadius: BorderRadius.circular(16),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(
-                                  color: Color(0xFFFFA000),
-                                  width: 1,
-                                ),
-                                borderRadius: BorderRadius.circular(16),
-                              ),
-                              errorBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(
-                                  color: Color(0x00000000),
-                                  width: 1,
-                                ),
-                                borderRadius: BorderRadius.circular(16),
-                              ),
-                              focusedErrorBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(
-                                  color: Color(0xFFF14343),
-                                  width: 1,
-                                ),
-                                borderRadius: BorderRadius.circular(16),
-                              ),
-                              filled: true,
-                              fillColor: Colors.white,
-                              contentPadding:
-                                  const EdgeInsetsDirectional.fromSTEB(
-                                      16, 14, 16, 14),
+                    SizedBox(height: 14),
+                    Container(
+                      width: double.infinity,
+                      height: 56,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Align(
+                        alignment: const AlignmentDirectional(0, 0),
+                        child: TextFormField(
+                          controller: textController1,
+                          autofocus: true,
+                          obscureText: false,
+                          decoration: InputDecoration(
+                            hintText: 'E-mail',
+                            hintStyle: TextStyle(
+                              color: Color(0xff9EADBD),
+                              fontSize: 16,
+                              fontFamily: 'RobotoFlex',
+                              fontWeight: FontWeight.w400,
                             ),
-                            style:
-                                FlutterFlowTheme.of(context).bodyText1.override(
-                                      fontFamily: 'Inter',
-                                      color: const Color(0xFF0F0F0F),
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.normal,
-                                    ),
-                            keyboardType: TextInputType.emailAddress,
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: const Color(0xffCBD4DD),
+                                width: 1,
+                              ),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                color: Color(0xFF8D40FF),
+                                width: 1,
+                              ),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                color: Color(0x00000000),
+                                width: 1,
+                              ),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            focusedErrorBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                color: Color(0x00000000),
+                                width: 1,
+                              ),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            filled: true,
+                            fillColor: Colors.white,
+                            contentPadding:
+                                const EdgeInsetsDirectional.fromSTEB(
+                                    16, 14, 16, 14),
                           ),
+                          style:
+                              FlutterFlowTheme.of(context).bodyText1.override(
+                                    fontFamily: 'Inter',
+                                    color: const Color(0xFF0F0F0F),
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.normal,
+                                  ),
                         ),
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 25),
-                      child: Container(
-                        width: double.infinity,
-                        height: 56,
-                        decoration: BoxDecoration(
-                          color:
-                              FlutterFlowTheme.of(context).secondaryBackground,
-                          borderRadius: BorderRadius.circular(16),
-                        ),
-                        child: Align(
-                          alignment: const AlignmentDirectional(0, 0),
-                          child: TextFormField(
-                            controller: textController2,
-                            autofocus: true,
-                            obscureText: !passwordVisibility,
-                            decoration: InputDecoration(
-                              hintText: 'Пароль',
-                              hintStyle: TextStyle(
-                                color: const Color(0xff252B37).withOpacity(0.2),
-                                fontSize: 16,
-                                fontFamily: 'RobotoFlex',
-                                fontWeight: FontWeight.w400,
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Container(
+                      width: double.infinity,
+                      height: 56,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Align(
+                        alignment: const AlignmentDirectional(0, 0),
+                        child: TextFormField(
+                          controller: textController2,
+                          autofocus: true,
+                          obscureText: !passwordVisibility,
+                          decoration: InputDecoration(
+                            hintText: 'Пароль',
+                            hintStyle: TextStyle(
+                              color: Color(0xff9EADBD),
+                              fontSize: 16,
+                              fontFamily: 'RobotoFlex',
+                              fontWeight: FontWeight.w400,
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: const Color(0xffCBD4DD),
+                                width: 1,
                               ),
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color:
-                                      const Color(0xff252B37).withOpacity(0.2),
-                                  width: 1,
-                                ),
-                                borderRadius: BorderRadius.circular(16),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                color: Color(0xFF8D40FF),
+                                width: 1,
                               ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(
-                                  color: Color(0xFFFFA000),
-                                  width: 1,
-                                ),
-                                borderRadius: BorderRadius.circular(16),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                color: Color(0x00000000),
+                                width: 1,
                               ),
-                              errorBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(
-                                  color: Color(0x00000000),
-                                  width: 1,
-                                ),
-                                borderRadius: BorderRadius.circular(4),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            focusedErrorBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                color: Color(0x00000000),
+                                width: 1,
                               ),
-                              focusedErrorBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(
-                                  color: Color(0xFFF14343),
-                                  width: 1,
-                                ),
-                                borderRadius: BorderRadius.circular(4),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            filled: true,
+                            fillColor: Colors.white,
+                            suffixIcon: InkWell(
+                              onTap: () => setState(
+                                () => passwordVisibility = !passwordVisibility,
                               ),
-                              filled: true,
-                              fillColor: Colors.white,
-                              contentPadding:
-                                  const EdgeInsetsDirectional.fromSTEB(
-                                      16, 14, 16, 14),
-                              suffixIcon: InkWell(
-                                onTap: () => setState(
-                                  () =>
-                                      passwordVisibility = !passwordVisibility,
-                                ),
-                                focusNode: FocusNode(skipTraversal: true),
-                                child: Icon(
-                                  passwordVisibility
-                                      ? Icons.visibility_outlined
-                                      : Icons.visibility_off_outlined,
-                                  color:
-                                      const Color(0xFF252B37).withOpacity(0.2),
-                                  size: 22,
-                                ),
+                              focusNode: FocusNode(skipTraversal: true),
+                              child: Icon(
+                                passwordVisibility
+                                    ? Icons.visibility_outlined
+                                    : Icons.visibility_off_outlined,
+                                color: const Color(0xFF252B37).withOpacity(0.2),
+                                size: 22,
                               ),
                             ),
-                            style:
-                                FlutterFlowTheme.of(context).bodyText1.override(
-                                      fontFamily: 'Inter',
-                                      color: const Color(0xFF0F0F0F),
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.normal,
-                                    ),
+                            contentPadding:
+                                const EdgeInsetsDirectional.fromSTEB(
+                                    16, 14, 16, 14),
                           ),
+                          style:
+                              FlutterFlowTheme.of(context).bodyText1.override(
+                                    fontFamily: 'Inter',
+                                    color: const Color(0xFF0F0F0F),
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.normal,
+                                  ),
                         ),
                       ),
                     ),
@@ -244,22 +232,23 @@ class _SignInWidgetState extends State<SignInWidget> {
                         child: Text(
                           "Я забыл пароль",
                           style: TextStyle(
-                            color: const Color(0xFF252B37).withOpacity(0.2),
+                            color: const Color(0xFF9EADBD),
                             fontSize: 16,
-                            fontFamily: 'RobotoFlex',
-                            fontWeight: FontWeight.w200,
+                            fontFamily: 'Inter',
+                            fontWeight: FontWeight.w400,
                           ),
                         ),
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 28),
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(0, 35, 0, 0),
                       child: Container(
                         width: double.infinity,
-                        height: 60,
+                        height: 56,
                         decoration: const BoxDecoration(),
                         child: FFButtonWidget(
-                          onPressed: () async {
+                          onPressed: () {
                             context.read<LoginBloc>().add(LoginAuth(
                                   textController1!.text,
                                   textController2!.text,
@@ -267,44 +256,36 @@ class _SignInWidgetState extends State<SignInWidget> {
                           },
                           text: 'Войти',
                           options: FFButtonOptions(
-                            width: double.infinity,
-                            height: double.infinity,
-                            color: const Color(0xFFFFA000),
                             elevation: 0,
-                            textStyle: const TextStyle(
+                            width: double.infinity,
+                            height: 60,
+                            color: Color(0xFF8D40FF),
+                            textStyle: TextStyle(
+                              fontFamily: 'Inter',
                               color: Colors.white,
                               fontSize: 16,
-                              fontFamily: 'RobotoFlex',
-                              fontWeight: FontWeight.w400,
+                              fontWeight: FontWeight.normal,
                             ),
-                            borderSide: const BorderSide(
-                              color: Colors.transparent,
-                              width: 1,
-                            ),
-                            borderRadius: BorderRadius.circular(16),
+                            borderRadius: BorderRadius.circular(10),
                           ),
                         ),
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 20),
+                      padding: const EdgeInsets.only(top: 26),
                       child: InkWell(
                         onTap: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                                builder: (context) => const SignUpWidget()),
-                          );
+                          context.pushNamed("signUp");
                         },
                         child: Text(
                           "Зарегистрироваться",
                           style: TextStyle(
-                            color: const Color(0xFF252B37).withOpacity(0.2),
+                            color: const Color(0xFF9EADBD),
                             fontSize: 16,
-                            fontFamily: 'RobotoFlex',
-                            fontWeight: FontWeight.w200,
+                            fontFamily: 'Inter',
+                            fontWeight: FontWeight.w400,
                             decoration: TextDecoration.underline,
-                            decorationColor:
-                                const Color(0xFF252B37).withOpacity(0.2),
+                            decorationColor: Color(0xffFF9EADBD),
                           ),
                         ),
                       ),

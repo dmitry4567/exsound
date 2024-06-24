@@ -19,10 +19,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
         password: event.password,
       );
 
-      if (functions.resultCodeSuccess(getJsonField(
-        (register.jsonBody ?? ''),
-        r'''$.status''',
-      ))) {
+      if (register.succeeded) {
         ffAppState.setUserAuthToken(
             getJsonField(register.jsonBody ?? '', r'''$.access_token'''));
         emit(const RegisterPass());

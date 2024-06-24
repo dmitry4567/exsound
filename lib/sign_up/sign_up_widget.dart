@@ -165,7 +165,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                       child: Align(
                         alignment: const AlignmentDirectional(0, 0),
                         child: TextFormField(
-                          controller: textController1,
+                          controller: textController2,
                           autofocus: true,
                           obscureText: false,
                           decoration: InputDecoration(
@@ -232,7 +232,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                       child: Align(
                         alignment: const AlignmentDirectional(0, 0),
                         child: TextFormField(
-                          controller: textController1,
+                          controller: textController3,
                           autofocus: true,
                           obscureText: false,
                           decoration: InputDecoration(
@@ -299,9 +299,9 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                       child: Align(
                         alignment: const AlignmentDirectional(0, 0),
                         child: TextFormField(
-                          controller: textController1,
+                          controller: textController4,
                           autofocus: true,
-                          obscureText: false,
+                          obscureText: !passwordVisibility,
                           decoration: InputDecoration(
                             hintText: 'Пароль',
                             hintStyle: TextStyle(
@@ -340,6 +340,19 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                             ),
                             filled: true,
                             fillColor: Colors.white,
+                            suffixIcon: InkWell(
+                              onTap: () => setState(
+                                () => passwordVisibility = !passwordVisibility,
+                              ),
+                              focusNode: FocusNode(skipTraversal: true),
+                              child: Icon(
+                                passwordVisibility
+                                    ? Icons.visibility_outlined
+                                    : Icons.visibility_off_outlined,
+                                color: const Color(0xFF252B37).withOpacity(0.2),
+                                size: 22,
+                              ),
+                            ),
                             contentPadding:
                                 const EdgeInsetsDirectional.fromSTEB(
                                     16, 14, 16, 14),

@@ -16,7 +16,7 @@ class Account {
       nickname: json['nickname'] as String,
       name: json['fullname'] as String,
       email: json['email'] as String,
-      notification: json.containsKey('token') ? true : false,
+      notification: json['device_token'] != null ? true : false,
     );
   }
 }

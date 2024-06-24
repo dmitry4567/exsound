@@ -110,13 +110,14 @@ class SignUpCall {
     final body = '''
     {
       "nickname": "$nickname",
+      "fullname": "впкшлвкп",
       "email": "$email", 
       "telegram": "$telegram",
       "password": "$password"
     }''';
 
     return ApiManager.instance.makeApiCall(
-      apiPath: '/auth/signUp',
+      apiPath: '/auth/register',
       callType: ApiCallType.POST,
       params: {},
       body: body,

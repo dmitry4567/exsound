@@ -97,7 +97,6 @@ class ApiManager {
       {ApiCallType.POST, ApiCallType.PUT, ApiCallType.PATCH}.contains(type),
       'Invalid ApiCallType $type for request with body',
     );
-    log(body.toString());
     final postBody = createBody(headers, params, body, bodyType);
     try {
       final response = await dioClient.post(pathToFunction, data: postBody);
@@ -106,9 +105,9 @@ class ApiManager {
         returnBody,
       );
     } on DioError catch (e) {
-      ApiCallResponse("", Headers(), e.response!.statusCode!);
+      return ApiCallResponse(
+          e.response!.data!, Headers(), e.response!.statusCode!);
     }
-    return ApiCallResponse("", Headers(), 100);
   }
 
   static dynamic createBody(

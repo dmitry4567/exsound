@@ -1,10 +1,7 @@
 import 'dart:convert';
 import 'dart:core';
 import 'dart:developer';
-import 'dart:ffi';
 import 'package:dio/dio.dart';
-import 'package:exstudio/flutter_flow/flutter_flow_util.dart';
-import 'package:exstudio/main.dart';
 
 enum ApiCallType {
   GET,
@@ -100,6 +97,7 @@ class ApiManager {
       {ApiCallType.POST, ApiCallType.PUT, ApiCallType.PATCH}.contains(type),
       'Invalid ApiCallType $type for request with body',
     );
+    log(body.toString());
     final postBody = createBody(headers, params, body, bodyType);
     try {
       final response = await dioClient.post(pathToFunction, data: postBody);

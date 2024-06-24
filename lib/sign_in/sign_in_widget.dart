@@ -1,5 +1,4 @@
 import 'package:exstudio/flutter_flow/flutter_flow_widgets.dart';
-import 'package:exstudio/index.dart';
 import 'package:exstudio/sign_in/bloc/login_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../backend/api_requests/api_calls.dart';

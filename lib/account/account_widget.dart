@@ -1,9 +1,11 @@
 import 'package:exstudio/account/bloc/account_bloc.dart';
 import 'package:exstudio/account/widgets/animated_toggle_buttom.dart';
+import 'package:exstudio/app_state.dart';
 import 'package:exstudio/flutter_flow/flutter_flow_theme.dart';
 import 'package:exstudio/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:flutter_svg/svg.dart';
 
 class AccountWidget extends StatefulWidget {
@@ -308,10 +310,11 @@ class _AccountWidgetState extends State<AccountWidget> {
                                           // if (resultCodeSuccess(getJsonField(
                                           //   (signOut?.jsonBody ?? ''),
                                           //   r'''$.status''',
-                                          // ))) {
-                                          //   FFAppState().userAuthToken = "";
-                                          //   FFAppState().clearDataUser();
-                                          //   Phoenix.rebirth(context);
+                                          // ))) {  
+                                          FFAppState().setUserAuthToken("");
+                                          FFAppState().setRefreshToken("");
+                                          FFAppState().clearDataUser();
+                                          Phoenix.rebirth(context);
                                           // }
                                         },
                                         functionNo: () {

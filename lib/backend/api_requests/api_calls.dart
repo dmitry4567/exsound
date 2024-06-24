@@ -1,11 +1,7 @@
 import 'dart:convert';
-import 'dart:developer';
-
 import 'package:dio/dio.dart';
-import 'package:exstudio/app_state.dart';
 import 'package:exstudio/main.dart';
 import 'package:scope_function/scope_function.dart';
-import '../../flutter_flow/custom_functions.dart' as f;
 import 'api_manager.dart';
 export 'api_manager.dart' show ApiCallResponse;
 
@@ -17,19 +13,13 @@ class CustomInterceptors extends InterceptorsWrapper {
   @override
   onRequest(RequestOptions options, RequestInterceptorHandler handler) async {
     options.headers['Content-Type'] = 'application/json';
-    // log(handler.toString());
-    return handler.next(options); // продолжаем выполнение запроса
-  }
-
-  @override
-  onResponse(Response response, ResponseInterceptorHandler handler) async {
-    log('RESPONSE[${response.statusCode}]: ${response.data}');
-    return handler.next(response); // продолжаем выполнение запроса
+    
+    return handler.next(options);
   }
 
   @override
   onError(DioError err, ErrorInterceptorHandler handler) async {
-    if (err.response?.statusCode == 401 || err.response?.statusCode == 400) {
+    if (err.response?.statusCode == 400) {
       try {
         var pathToFunction = '/auth/refresh';
 
@@ -43,22 +33,38 @@ class CustomInterceptors extends InterceptorsWrapper {
           ffAppState.setUserAuthToken(data["access_token"]);
         }
 
-        _retry(err.requestOptions);
-      } on DioError catch (e) {}
-      return;
+        await _getRetryRequest(err);
+      } catch (e) {}
     }
     return handler.next(err);
   }
-}
 
-Future<Response<dynamic>> _retry(RequestOptions reqOpt) {
-  final options = Options(method: reqOpt.method, headers: reqOpt.headers);
+  Future<Response> _getRetryRequest(DioError err) async {
+    final requestOptions = err.response!.requestOptions;
 
-  return dioClient.request<dynamic>(
-    reqOpt.path,
-    queryParameters: reqOpt.queryParameters,
-    options: options,
-  );
+    final options = Options(
+      method: requestOptions.method,
+      headers: requestOptions.headers,
+    );
+
+    final dioRefresh = Dio(
+      BaseOptions(
+        baseUrl: requestOptions.baseUrl,
+        headers: <String, String>{'Content-Type': 'application/json'},
+      ),
+    );
+
+    dioRefresh.interceptors.add(this);
+
+    final response = await dioRefresh.request<dynamic>(
+      requestOptions.path,
+      data: requestOptions.data,
+      queryParameters: requestOptions.queryParameters,
+      options: options,
+    );
+
+    return response;
+  }
 }
 
 final dioClient = Dio(
@@ -66,9 +72,6 @@ final dioClient = Dio(
     baseUrl: "http://192.168.0.109:3000/api",
     connectTimeout: 30000,
     receiveTimeout: 3000,
-    // validateStatus: (status) {
-    //   return f.resultCodeSuccess(status!);
-    // },
   ),
 ).also((it) {
   it.interceptors.add(CustomInterceptors(it));
@@ -132,12 +135,10 @@ class GetSessionsByTimePeriod {
   }) {
     final body = '''
     {
-      "token:": "$token",
+      "token": "$token",
       "from": $from,
       "until": $until
     }''';
-
-    log(body);
 
     return ApiManager.instance.makeApiCall(
       apiPath: '/studio-sessions/findByTimePeriod',

@@ -1,3 +1,4 @@
+import 'package:exstudio/flutter_flow/flutter_flow_util.dart';
 import 'package:exstudio/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -137,7 +138,9 @@ class BookButton extends StatelessWidget {
       child: Container(
         width: double.infinity,
         child: FFButtonWidget(
-          onPressed: () async {},
+          onPressed: () async {
+            context.pushNamed('addsession');
+          },
           text: 'Забронировать время',
           options: FFButtonOptions(
             elevation: 0,

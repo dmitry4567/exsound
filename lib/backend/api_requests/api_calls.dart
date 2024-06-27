@@ -222,18 +222,24 @@ class GetAdmins {
 class CreateSession {
   static Future<ApiCallResponse> call({
     String token = '',
+    int type = 0,
+    String name = '',
+    int to = 0,
+    int until = 0,
   }) {
     final body = '''
     {
        "token": "${token}",
-       "type_of_activity_id": 1,
-       "name_track": "string2",
-       "from": 7,
-       "until": 8,
+       "type_of_activity_id": ${type},
+       "name_track": "${name}",
+       "from": ${to},
+       "until": ${until},
        "user_admins_id": [
          1
        ]
     }''';
+
+    log(body);
 
     return ApiManager.instance.makeApiCall(
       apiPath: '/studio-sessions/create',

@@ -180,6 +180,10 @@ class _AddSessionState extends State<AddSession> {
                                                   .add(Duration(days: 1))
                                                   .millisecondsSinceEpoch -
                                               1));
+
+                                  context
+                                      .read<SessionCubit>()
+                                      .updateDay(selectedDay);
                                 }
                               },
                               onFormatChanged: (format) {
@@ -708,7 +712,9 @@ class _AddSessionState extends State<AddSession> {
                           width: double.infinity,
                           child: FFButtonWidget(
                             onPressed: () async {
-                              context.read<SessionCubit>().createSession(context);
+                              context
+                                  .read<SessionCubit>()
+                                  .createSession(context);
                             },
                             text: 'Забронировать время',
                             options: FFButtonOptions(

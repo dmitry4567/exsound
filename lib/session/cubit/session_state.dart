@@ -7,6 +7,7 @@ class Session {
   final String nameTrack;
   final TimeOfDay to;
   final TimeOfDay until;
+  final DateTime day;
   final List<String> admins;
 
   List<Admin> apiAdmins;
@@ -16,18 +17,15 @@ class Session {
       required this.nameTrack,
       required this.to,
       required this.until,
+      required this.day,
       required this.admins,
       required this.apiAdmins});
 
   Future<Session> init() async {
     final data = await GetAdmins.call(token: FFAppState().userAuthToken);
 
-    List<String> apiAdmins = ["sef", "fsef"];
-
     List<Admin> admins = List<Admin>.from(
         data.jsonBody.map((project) => Admin.fromJson(project)).toList());
-
-    print(admins);
 
     return this.copyWith(apiAdmins: admins);
   }
@@ -37,6 +35,7 @@ class Session {
     String? nameTrack,
     TimeOfDay? to,
     TimeOfDay? until,
+    DateTime? day,
     List<String>? admins,
     List<Admin>? apiAdmins,
   }) {
@@ -45,6 +44,7 @@ class Session {
         nameTrack: nameTrack ?? this.nameTrack,
         to: to ?? this.to,
         until: until ?? this.until,
+        day: day ?? this.day,
         admins: admins ?? this.admins,
         apiAdmins: apiAdmins ?? this.apiAdmins);
   }

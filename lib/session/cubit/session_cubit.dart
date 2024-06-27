@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:exstudio/backend/api_requests/api_calls.dart';
 import 'package:exstudio/flutter_flow/flutter_flow_util.dart';
@@ -14,6 +16,7 @@ class SessionCubit extends Cubit<Session> {
               nameTrack: '',
               to: TimeOfDay.fromDateTime(DateTime(13, 23)),
               until: TimeOfDay.fromDateTime(DateTime(13, 23)),
+              day: DateTime.now(),
               admins: [],
               apiAdmins: []),
         );
@@ -28,11 +31,16 @@ class SessionCubit extends Cubit<Session> {
         nameTrack: '',
         to: TimeOfDay.fromDateTime(DateTime(13, 23)),
         until: TimeOfDay.fromDateTime(DateTime(13, 23)),
+        day: DateTime.now(),
         admins: [],
         apiAdmins: []).init();
 
     listAdmins = session.apiAdmins;
     emit(session);
+  }
+
+  void updateDay(DateTime day) {
+    emit(state.copyWith(day: day));
   }
 
   void updateTime(TimeOfDay? to, TimeOfDay? until) {
@@ -63,7 +71,29 @@ class SessionCubit extends Cubit<Session> {
   }
 
   void createSession(BuildContext context) async {
-    final data = await CreateSession.call(token: FFAppState().userAuthToken);
+    final dateTo = DateTime(
+      this.state.day.year,
+      this.state.day.month,
+      this.state.day.day,
+      this.state.to.hour,
+      this.state.to.minute,
+    ).millisecondsSinceEpoch;
+
+    final dateUntil = DateTime(
+      this.state.day.year,
+      this.state.day.month,
+      this.state.day.day,
+      this.state.until.hour,
+      this.state.until.minute,
+    ).millisecondsSinceEpoch;
+
+    final data = await CreateSession.call(
+      token: FFAppState().userAuthToken,
+      type: listTypes.indexOf(this.state.type),
+      name: this.state.nameTrack,
+      to: dateTo,
+      until: dateUntil,
+    );
 
     if (data.succeeded) {
       // Provider.of<ScheduleBloc>(context).add(ScheduleGetData());

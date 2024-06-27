@@ -89,19 +89,20 @@ class SessionCubit extends Cubit<Session> {
 
     final data = await CreateSession.call(
       token: FFAppState().userAuthToken,
-      type: listTypes.indexOf(this.state.type),
+      type: listTypes.indexOf(this.state.type) + 1,
       name: this.state.nameTrack,
       to: dateTo,
       until: dateUntil,
     );
 
     if (data.succeeded) {
-      // Provider.of<ScheduleBloc>(context).add(ScheduleGetData());
-
       ScaffoldMessenger.of(context)
           .showSnackBar(functions.infoSnackBar("Сессия успешно создана"));
 
       context.pop();
+    } else {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(functions.setupSnackBar(data.jsonBody['message']));
     }
   }
 }

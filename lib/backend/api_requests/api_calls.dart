@@ -69,7 +69,7 @@ class CustomInterceptors extends InterceptorsWrapper {
 
 final dioClient = Dio(
   BaseOptions(
-    baseUrl: "http://192.168.0.109:3000/api",
+    baseUrl: "http://172.20.10.5:3000/api",
     connectTimeout: 30000,
     receiveTimeout: 3000,
   ),

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:exstudio/main.dart';
 import 'package:scope_function/scope_function.dart';
@@ -13,7 +14,7 @@ class CustomInterceptors extends InterceptorsWrapper {
   @override
   onRequest(RequestOptions options, RequestInterceptorHandler handler) async {
     options.headers['Content-Type'] = 'application/json';
-    
+
     return handler.next(options);
   }
 
@@ -187,6 +188,61 @@ class GetAccountInfo {
 
     return ApiManager.instance.makeApiCall(
       apiPath: '/user/info',
+      callType: ApiCallType.POST,
+      params: {},
+      body: body,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      dioClient: dioClient,
+    );
+  }
+}
+
+class GetAdmins {
+  static Future<ApiCallResponse> call({
+    String token = '',
+  }) {
+    final body = '''
+    {
+      "token": "$token"
+    }''';
+
+    return ApiManager.instance.makeApiCall(
+      apiPath: '/user/admins',
+      callType: ApiCallType.POST,
+      params: {},
+      body: body,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      dioClient: dioClient,
+    );
+  }
+}
+
+class CreateSession {
+  static Future<ApiCallResponse> call({
+    String token = '',
+    int type = 0,
+    String name = '',
+    int to = 0,
+    int until = 0,
+  }) {
+    final body = '''
+    {
+       "token": "${token}",
+       "type_of_activity_id": ${type},
+       "name_track": "${name}",
+       "from": ${to},
+       "until": ${until},
+       "user_admins_id": [
+         1
+       ]
+    }''';
+
+    log(body);
+
+    return ApiManager.instance.makeApiCall(
+      apiPath: '/studio-sessions/create',
       callType: ApiCallType.POST,
       params: {},
       body: body,

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:exstudio/flutter_flow/flutter_flow_util.dart';
 import 'package:exstudio/navigation_bar_widget.dart';
+import 'package:exstudio/session/session.dart';
 import 'package:exstudio/sign_in/sign_in_widget.dart';
 import 'package:exstudio/sign_up/sign_up_widget.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +20,8 @@ class AppStateNotifier extends ChangeNotifier {
 }
 
 GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
-      initialLocation: (FFAppState().userAuthToken == "") ? "/signIn" : '/',
+      initialLocation:
+          (FFAppState().userAuthToken == "") ? "/signIn" : '/',
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
       errorBuilder: (context, _) => const NavBarWidget(initialPage: 'Home'),
@@ -51,6 +53,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               builder: (context, params) =>
                   const NavBarWidget(initialPage: 'Home'),
             ),
+            FFRoute(
+                name: 'AddSession',
+                path: 'addsession',
+                builder: (context, params) => AddSession()),
             FFRoute(
               name: 'Account',
               path: 'account',

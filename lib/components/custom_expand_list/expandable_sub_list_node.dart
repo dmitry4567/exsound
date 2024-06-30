@@ -1,6 +1,6 @@
 import 'package:expandable/expandable.dart';
-import 'package:exstudio/components/custom_expand_list/expand_list_node.dart';
-import 'package:exstudio/components/custom_expand_list/expandable_list_data.dart';
+import 'package:exstudio/session/widgets/type/expand_list_node_type.dart';
+import 'package:exstudio/session/widgets/model.dart';
 import 'package:flutter/material.dart';
 
 class ExpandSubListNode extends StatefulWidget {

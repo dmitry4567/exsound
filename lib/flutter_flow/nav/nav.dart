@@ -21,7 +21,7 @@ class AppStateNotifier extends ChangeNotifier {
 
 GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       initialLocation:
-          (FFAppState().userAuthToken == "") ? "/signIn" : '/addsession',
+          (FFAppState().userAuthToken == "") ? "/signIn" : '/',
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
       errorBuilder: (context, _) => const NavBarWidget(initialPage: 'Home'),

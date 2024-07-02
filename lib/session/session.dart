@@ -327,16 +327,19 @@ class _AddSessionState extends State<AddSession> {
                                               ),
                                             ],
                                           ),
-                                          Text(
-                                            state.data[index].nameTrack,
-                                            style: TextStyle(
-                                              fontFamily: 'BebasNeue',
-                                              color: Color(0xFF9EADBD),
-                                              fontSize: 20,
-                                              height: 1,
-                                              fontWeight: FontWeight.normal,
-                                            ),
-                                          ),
+                                          state.data[index].nameTrack != ""
+                                              ? Text(
+                                                  state.data[index].nameTrack,
+                                                  style: TextStyle(
+                                                    fontFamily: 'BebasNeue',
+                                                    color: Color(0xFF9EADBD),
+                                                    fontSize: 20,
+                                                    height: 1,
+                                                    fontWeight:
+                                                        FontWeight.normal,
+                                                  ),
+                                                )
+                                              : Container(),
                                           SizedBox(height: 18),
                                           Text(
                                             "Админы",
@@ -485,7 +488,10 @@ class _AddSessionState extends State<AddSession> {
                               return Text(
                                 "${state.to.format(context)}-${state.until.format(context)}",
                                 style: TextStyle(
-                                  color: Color(0xffCBD4DD),
+                                  color: (state.to.toSeconds == 0 &&
+                                          state.until.toSeconds == 0)
+                                      ? Color(0xffCBD4DD)
+                                      : Colors.black,
                                   fontSize: 30,
                                   fontFamily: "BebasNeue",
                                   fontWeight: FontWeight.w400,

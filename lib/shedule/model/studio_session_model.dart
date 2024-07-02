@@ -20,7 +20,7 @@ class StudioSessions {
   factory StudioSessions.fromJson(Map<String, dynamic> json) {
     return StudioSessions(
       id: json['id'] as int,
-      nameTrack: json['name_track'] as String,
+      nameTrack: json['name_track'] ?? "",
       from: DateTime.parse(json['from']),
       until: DateTime.parse(json['until']),
       typeOfActivity: TypeOfActivity.fromJson(json['type_of_activity']),

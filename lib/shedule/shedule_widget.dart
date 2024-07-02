@@ -281,16 +281,19 @@ class _SheduleWidgetState extends State<SheduleWidget> {
                                               ),
                                             ],
                                           ),
-                                          Text(
-                                            state.data[index].nameTrack,
-                                            style: TextStyle(
-                                              fontFamily: 'BebasNeue',
-                                              color: Color(0xFF9EADBD),
-                                              fontSize: 20,
-                                              height: 1,
-                                              fontWeight: FontWeight.normal,
-                                            ),
-                                          ),
+                                          state.data[index].nameTrack != ""
+                                              ? Text(
+                                                  state.data[index].nameTrack,
+                                                  style: TextStyle(
+                                                    fontFamily: 'BebasNeue',
+                                                    color: Color(0xFF9EADBD),
+                                                    fontSize: 20,
+                                                    height: 1,
+                                                    fontWeight:
+                                                        FontWeight.normal,
+                                                  ),
+                                                )
+                                              : Container(),
                                           SizedBox(height: 18),
                                           Text(
                                             "Админы",

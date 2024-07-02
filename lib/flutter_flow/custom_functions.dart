@@ -2,6 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
+extension TimeOfDayToSeconds on TimeOfDay {
+  int get toSeconds {
+    return this.hour * 3600 + this.minute * 60;
+  }
+}
+
 String getFormatterTimeString(DateTime workoutTime) {
   var currentDayOfWeek = "";
 

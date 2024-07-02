@@ -1,7 +1,7 @@
 
 import 'package:exstudio/session/cubit/session_cubit.dart';
+import 'package:exstudio/session/cubit/session_state.dart';
 import 'package:exstudio/session/widgets/admin/expand_list_node_admin.dart';
-import 'package:exstudio/session/widgets/model.dart';
 import 'package:flutter/material.dart';
 
 class ChooseAdminWidget extends StatefulWidget {
@@ -22,7 +22,7 @@ class _ChooseAdminWidgetState extends State<ChooseAdminWidget> {
     for (var i = 0; i < SessionCubit.listAdmins.length; i++) {
       typeWidgets.add(
         ExpandListNodeAdmin(
-          target: Target(key: i.toString(), title: SessionCubit.listAdmins[i].nickname),
+          target: Target(key: i, title: SessionCubit.listAdmins[i].nickname),
           fontSize: 16,
           innerVerticalPadding: 18,
           innerHorizontalPadding: 16,

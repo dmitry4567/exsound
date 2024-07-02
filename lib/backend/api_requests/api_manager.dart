@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:core';
-import 'dart:developer';
 import 'package:dio/dio.dart';
 
 enum ApiCallType {

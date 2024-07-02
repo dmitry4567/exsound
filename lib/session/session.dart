@@ -6,7 +6,6 @@ import 'package:exstudio/session/cubit/session_state.dart';
 import 'package:exstudio/session/widgets/admin/choose_admin.dart';
 import 'package:exstudio/session/widgets/type/choose_type.dart';
 import 'package:exstudio/flutter_flow/flutter_flow_util.dart';
-import 'package:exstudio/session/widgets/model.dart';
 import 'package:exstudio/shedule/bloc/schedule_bloc.dart';
 import 'package:exstudio/shedule/model/studio_session_model.dart';
 import 'package:flutter/material.dart';
@@ -25,8 +24,6 @@ class AddSession extends StatefulWidget {
 }
 
 class _AddSessionState extends State<AddSession> {
-  final ExpandableListData typeNotifier = ExpandableListData();
-
   final formatter = DateFormat('HH:mm');
 
   int startOfMonth = DateTime.now().month;
@@ -538,7 +535,7 @@ class _AddSessionState extends State<AddSession> {
                                           },
                                           builder: (context, state) {
                                             return Text(
-                                              state.type,
+                                              state.type.name,
                                               style: TextStyle(
                                                   fontSize: 16,
                                                   fontStyle: FontStyle.normal,

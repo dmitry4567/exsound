@@ -198,6 +198,28 @@ class GetAccountInfo {
   }
 }
 
+class GetTypes {
+  static Future<ApiCallResponse> call({
+    String token = '',
+  }) {
+    final body = '''
+    {
+      "token": "$token"
+    }''';
+
+    return ApiManager.instance.makeApiCall(
+      apiPath: '/type-of-activity/all',
+      callType: ApiCallType.POST,
+      params: {},
+      body: body,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      dioClient: dioClient,
+    );
+  }
+}
+
+
 class GetAdmins {
   static Future<ApiCallResponse> call({
     String token = '',

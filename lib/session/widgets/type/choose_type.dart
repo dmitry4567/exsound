@@ -1,6 +1,6 @@
 
 import 'package:exstudio/session/cubit/session_cubit.dart';
-import 'package:exstudio/session/widgets/model.dart';
+import 'package:exstudio/session/cubit/session_state.dart';
 import 'package:exstudio/session/widgets/type/expand_list_node_type.dart';
 import 'package:flutter/material.dart';
 
@@ -22,7 +22,7 @@ class _ChooseTypeWidgetState extends State<ChooseTypeWidget> {
     for (var i = 0; i < SessionCubit.listTypes.length; i++) {
       typeWidgets.add(
         ExpandListNodeType(
-          target: Target(key: i.toString(), title: SessionCubit.listTypes[i]),
+          target: Target(key: i, title: SessionCubit.listTypes[i].name),
           fontSize: 16,
           innerVerticalPadding: 12,
           innerHorizontalPadding: 16,

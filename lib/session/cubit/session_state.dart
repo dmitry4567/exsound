@@ -1,16 +1,12 @@
-import 'package:exstudio/backend/api_requests/api_calls.dart';
-import 'package:exstudio/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 
 class Session {
-  final String type;
+  final Type type;
   final String nameTrack;
   final TimeOfDay to;
   final TimeOfDay until;
   final DateTime day;
   final List<String> admins;
-
-  List<Admin> apiAdmins;
 
   Session(
       {required this.type,
@@ -18,20 +14,10 @@ class Session {
       required this.to,
       required this.until,
       required this.day,
-      required this.admins,
-      required this.apiAdmins});
-
-  Future<Session> init() async {
-    final data = await GetAdmins.call(token: FFAppState().userAuthToken);
-
-    List<Admin> admins = List<Admin>.from(
-        data.jsonBody.map((project) => Admin.fromJson(project)).toList());
-
-    return this.copyWith(apiAdmins: admins);
-  }
+      required this.admins});
 
   Session copyWith({
-    String? type,
+    Type? type,
     String? nameTrack,
     TimeOfDay? to,
     TimeOfDay? until,
@@ -45,8 +31,7 @@ class Session {
         to: to ?? this.to,
         until: until ?? this.until,
         day: day ?? this.day,
-        admins: admins ?? this.admins,
-        apiAdmins: apiAdmins ?? this.apiAdmins);
+        admins: admins ?? this.admins);
   }
 }
 
@@ -63,6 +48,37 @@ class Admin {
     return Admin(
       id: json['id'] as int,
       nickname: json['nickname'] as String,
+    );
+  }
+}
+
+class Type {
+  final int id;
+  final String name;
+
+  const Type({
+    required this.id,
+    required this.name,
+  });
+
+  factory Type.fromJson(Map<String, dynamic> json) {
+    return Type(
+      id: (json['id'] as int) - 1,
+      name: json['name'] as String,
+    );
+  }
+}
+
+class Target {
+  int key;
+  String title;
+
+  Target({required this.key, required this.title});
+
+  factory Target.fromJson(Map<String, dynamic> data) {
+    return Target(
+      key: data['key'],
+      title: data['title'],
     );
   }
 }

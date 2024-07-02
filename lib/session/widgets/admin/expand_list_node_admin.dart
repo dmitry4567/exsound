@@ -1,5 +1,5 @@
 import 'package:exstudio/session/cubit/session_cubit.dart';
-import 'package:exstudio/session/widgets/model.dart';
+import 'package:exstudio/session/cubit/session_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';

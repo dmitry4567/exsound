@@ -1,5 +1,5 @@
 import 'package:exstudio/session/cubit/session_cubit.dart';
-import 'package:exstudio/session/widgets/model.dart';
+import 'package:exstudio/session/cubit/session_state.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -56,7 +56,7 @@ class _ExpandListNodeTypeState extends State<ExpandListNodeType> {
             clipBehavior: Clip.hardEdge,
             child: InkWell(
               onTap: () {
-                cubit.updateType(widget.target.title);
+                cubit.updateType(widget.target.key);
 
                 Navigator.of(context).pop();
               },

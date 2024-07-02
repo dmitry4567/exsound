@@ -12,31 +12,44 @@ class SessionCubit extends Cubit<Session> {
   SessionCubit()
       : super(
           Session(
-              type: SessionCubit.listTypes[0],
+              type: Type(id: 0, name: ''),
               nameTrack: '',
               to: TimeOfDay.fromDateTime(DateTime(13, 23)),
               until: TimeOfDay.fromDateTime(DateTime(13, 23)),
               day: DateTime.now(),
-              admins: [],
-              apiAdmins: []),
+              admins: []),
         );
 
-  static const List<String> listTypes = ['Запись', 'Сведение', 'Мастеринг'];
+  // static const List<String> listTypes = ['Запись', 'Сведение', 'Мастеринг'];
   // static const List<String> listAdmins = ['smokeynagato', 'icantluvv', 'Rany'];
+  static List<Type> listTypes = [];
   static List<Admin> listAdmins = [];
 
-  Future<void> init() async {
-    final session = await Session(
-        type: SessionCubit.listTypes[0],
-        nameTrack: '',
-        to: TimeOfDay.fromDateTime(DateTime(13, 23)),
-        until: TimeOfDay.fromDateTime(DateTime(13, 23)),
-        day: DateTime.now(),
-        admins: [],
-        apiAdmins: []).init();
+  Future<dynamic> init() async {
+    // final session = await Session(
+    //     type: SessionCubit.listTypes[0],
+    //     nameTrack: '',
+    //     to: TimeOfDay.fromDateTime(DateTime(13, 23)),
+    //     until: TimeOfDay.fromDateTime(DateTime(13, 23)),
+    //     day: DateTime.now(),
+    //     admins: [],
+    //     apiAdmins: []).init();
 
-    listAdmins = session.apiAdmins;
-    emit(session);
+    // if (session.)
+    final data = await Future.wait([
+      GetTypes.call(token: FFAppState().userAuthToken),
+      GetAdmins.call(token: FFAppState().userAuthToken)
+    ]);
+
+    if (data[0].succeeded && data[1].succeeded) {
+      List<Type> types = List<Type>.from(
+          data[0].jsonBody.map((project) => Type.fromJson(project)).toList());
+      List<Admin> admins = List<Admin>.from(
+          data[1].jsonBody.map((project) => Admin.fromJson(project)).toList());
+
+      listTypes = types;
+      listAdmins = admins;
+    }
   }
 
   void updateDay(DateTime day) {
@@ -50,8 +63,8 @@ class SessionCubit extends Cubit<Session> {
     ));
   }
 
-  void updateType(String? value) {
-    emit(state.copyWith(type: value));
+  void updateType(int? key) {
+    emit(state.copyWith(type: listTypes.firstWhere((type) => type.id== key)));
   }
 
   void updateNameTrack(String? value) {
@@ -89,7 +102,7 @@ class SessionCubit extends Cubit<Session> {
 
     final data = await CreateSession.call(
       token: FFAppState().userAuthToken,
-      type: listTypes.indexOf(this.state.type) + 1,
+      type: this.state.type.id + 1,
       name: this.state.nameTrack,
       to: dateTo,
       until: dateUntil,

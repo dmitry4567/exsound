@@ -84,7 +84,7 @@ class SessionCubit extends Cubit<Session> {
   }
 
   void createSession(BuildContext context) async {
-    final dateTo = DateTime(
+    final dateTo = DateTime.utc(
       this.state.day.year,
       this.state.day.month,
       this.state.day.day,
@@ -92,7 +92,7 @@ class SessionCubit extends Cubit<Session> {
       this.state.to.minute,
     ).millisecondsSinceEpoch;
 
-    final dateUntil = DateTime(
+    final dateUntil = DateTime.utc(
       this.state.day.year,
       this.state.day.month,
       this.state.day.day,

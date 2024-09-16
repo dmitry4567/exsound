@@ -18,22 +18,25 @@ PODS:
   - firebase_analytics (11.2.1):
     - Firebase/Analytics (= 10.29.0)
     - firebase_core
-    - Flutter
+    - FlutterMacOS
   - firebase_auth (5.1.4):
-    - Firebase/Auth (= 10.29.0)
+    - Firebase/Auth (~> 10.29.0)
+    - Firebase/CoreOnly (~> 10.29.0)
     - firebase_core
-    - Flutter
+    - FlutterMacOS
   - firebase_core (3.3.0):
-    - Firebase/CoreOnly (= 10.29.0)
-    - Flutter
+    - Firebase/CoreOnly (~> 10.29.0)
+    - FlutterMacOS
   - firebase_crashlytics (4.0.4):
-    - Firebase/Crashlytics (= 10.29.0)
+    - Firebase/CoreOnly (~> 10.29.0)
+    - Firebase/Crashlytics (~> 10.29.0)
     - firebase_core
-    - Flutter
+    - FlutterMacOS
   - firebase_messaging (15.0.4):
-    - Firebase/Messaging (= 10.29.0)
+    - Firebase/CoreOnly (~> 10.29.0)
+    - Firebase/Messaging (~> 10.29.0)
     - firebase_core
-    - Flutter
+    - FlutterMacOS
   - FirebaseAnalytics (10.29.0):
     - FirebaseAnalytics/AdIdSupport (= 10.29.0)
     - FirebaseCore (~> 10.0)
@@ -101,9 +104,9 @@ PODS:
     - GoogleUtilities/UserDefaults (~> 7.13)
     - nanopb (< 2.30911.0, >= 2.30908.0)
     - PromisesSwift (~> 2.1)
-  - Flutter (1.0.0)
-  - flutter_secure_storage (6.0.0):
-    - Flutter
+  - flutter_secure_storage_macos (6.1.1):
+    - FlutterMacOS
+  - FlutterMacOS (1.0.0)
   - GoogleAppMeasurement (10.29.0):
     - GoogleAppMeasurement/AdIdSupport (= 10.29.0)
     - GoogleUtilities/AppDelegateSwizzler (~> 7.11)
@@ -168,24 +171,23 @@ PODS:
   - PromisesObjC (2.4.0)
   - PromisesSwift (2.4.0):
     - PromisesObjC (= 2.4.0)
-  - RecaptchaInterop (100.0.0)
   - shared_preferences_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
-  - url_launcher_ios (0.0.1):
-    - Flutter
+  - url_launcher_macos (0.0.1):
+    - FlutterMacOS
 
 DEPENDENCIES:
-  - firebase_analytics (from `.symlinks/plugins/firebase_analytics/ios`)
-  - firebase_auth (from `.symlinks/plugins/firebase_auth/ios`)
-  - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
-  - firebase_crashlytics (from `.symlinks/plugins/firebase_crashlytics/ios`)
-  - firebase_messaging (from `.symlinks/plugins/firebase_messaging/ios`)
-  - Flutter (from `Flutter`)
-  - flutter_secure_storage (from `.symlinks/plugins/flutter_secure_storage/ios`)
-  - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
-  - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/darwin`)
-  - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
+  - firebase_analytics (from `Flutter/ephemeral/.symlinks/plugins/firebase_analytics/macos`)
+  - firebase_auth (from `Flutter/ephemeral/.symlinks/plugins/firebase_auth/macos`)
+  - firebase_core (from `Flutter/ephemeral/.symlinks/plugins/firebase_core/macos`)
+  - firebase_crashlytics (from `Flutter/ephemeral/.symlinks/plugins/firebase_crashlytics/macos`)
+  - firebase_messaging (from `Flutter/ephemeral/.symlinks/plugins/firebase_messaging/macos`)
+  - flutter_secure_storage_macos (from `Flutter/ephemeral/.symlinks/plugins/flutter_secure_storage_macos/macos`)
+  - FlutterMacOS (from `Flutter/ephemeral`)
+  - path_provider_foundation (from `Flutter/ephemeral/.symlinks/plugins/path_provider_foundation/darwin`)
+  - shared_preferences_foundation (from `Flutter/ephemeral/.symlinks/plugins/shared_preferences_foundation/darwin`)
+  - url_launcher_macos (from `Flutter/ephemeral/.symlinks/plugins/url_launcher_macos/macos`)
 
 SPEC REPOS:
   trunk:
@@ -208,37 +210,36 @@ SPEC REPOS:
     - nanopb
     - PromisesObjC
     - PromisesSwift
-    - RecaptchaInterop
 
 EXTERNAL SOURCES:
   firebase_analytics:
-    :path: ".symlinks/plugins/firebase_analytics/ios"
+    :path: Flutter/ephemeral/.symlinks/plugins/firebase_analytics/macos
   firebase_auth:
-    :path: ".symlinks/plugins/firebase_auth/ios"
+    :path: Flutter/ephemeral/.symlinks/plugins/firebase_auth/macos
   firebase_core:
-    :path: ".symlinks/plugins/firebase_core/ios"
+    :path: Flutter/ephemeral/.symlinks/plugins/firebase_core/macos
   firebase_crashlytics:
-    :path: ".symlinks/plugins/firebase_crashlytics/ios"
+    :path: Flutter/ephemeral/.symlinks/plugins/firebase_crashlytics/macos
   firebase_messaging:
-    :path: ".symlinks/plugins/firebase_messaging/ios"
-  Flutter:
-    :path: Flutter
-  flutter_secure_storage:
-    :path: ".symlinks/plugins/flutter_secure_storage/ios"
+    :path: Flutter/ephemeral/.symlinks/plugins/firebase_messaging/macos
+  flutter_secure_storage_macos:
+    :path: Flutter/ephemeral/.symlinks/plugins/flutter_secure_storage_macos/macos
+  FlutterMacOS:
+    :path: Flutter/ephemeral
   path_provider_foundation:
-    :path: ".symlinks/plugins/path_provider_foundation/darwin"
+    :path: Flutter/ephemeral/.symlinks/plugins/path_provider_foundation/darwin
   shared_preferences_foundation:
-    :path: ".symlinks/plugins/shared_preferences_foundation/darwin"
-  url_launcher_ios:
-    :path: ".symlinks/plugins/url_launcher_ios/ios"
+    :path: Flutter/ephemeral/.symlinks/plugins/shared_preferences_foundation/darwin
+  url_launcher_macos:
+    :path: Flutter/ephemeral/.symlinks/plugins/url_launcher_macos/macos
 
 SPEC CHECKSUMS:
   Firebase: cec914dab6fd7b1bd8ab56ea07ce4e03dd251c2d
-  firebase_analytics: 04491d1ee74c8e7c2330c96afc54188a969b06ee
-  firebase_auth: 8dbfcdd635cc4fb2ea213aeee8c9a979b3d3373b
-  firebase_core: 57aeb91680e5d5e6df6b888064be7c785f146efb
-  firebase_crashlytics: e3d3e0c99bad5aaab5908385133dea8ec344693f
-  firebase_messaging: c862b3d2b973ecc769194dc8de09bd22c77ae757
+  firebase_analytics: e1236d621a5d62d16a706315d198f3cd7f0e2fcb
+  firebase_auth: a1b0972e30634894e8b24bf618b9a5aeb1f86119
+  firebase_core: 73185b844efc8a534e5744d68152e75e740922d2
+  firebase_crashlytics: a7b94c09eb4df16cabb0cfae4831ff4624a3d5d6
+  firebase_messaging: 167fdd90971720e0b62ccd6fa8d430b8af4ca6e9
   FirebaseAnalytics: 23717de130b779aa506e757edb9713d24b6ffeda
   FirebaseAppCheckInterop: 6a1757cfd4067d8e00fccd14fcc1b8fd78cfac07
   FirebaseAuth: e2ebfaf9fb4638a1c9a3b0efd17d1b90943987cd
@@ -250,8 +251,8 @@ SPEC CHECKSUMS:
   FirebaseMessaging: 7b5d8033e183ab59eb5b852a53201559e976d366
   FirebaseRemoteConfigInterop: 6efda51fb5e2f15b16585197e26eaa09574e8a4d
   FirebaseSessions: dbd14adac65ce996228652c1fc3a3f576bdf3ecc
-  Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
-  flutter_secure_storage: d33dac7ae2ea08509be337e775f6b59f1ff45f12
+  flutter_secure_storage_macos: 59459653abe1adb92abbc8ea747d79f8d19866c9
+  FlutterMacOS: 8f6f14fa908a6fb3fba0cd85dbd81ec4b251fb24
   GoogleAppMeasurement: f9de05ee17401e3355f68e8fc8b5064d429f5918
   GoogleDataTransport: 6c09b596d841063d76d4288cc2d2f42cc36e1e2a
   GoogleUtilities: ea963c370a38a8069cc5f7ba4ca849a60b6d7d15
@@ -260,10 +261,9 @@ SPEC CHECKSUMS:
   path_provider_foundation: 2b6b4c569c0fb62ec74538f866245ac84301af46
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
   PromisesSwift: 9d77319bbe72ebf6d872900551f7eeba9bce2851
-  RecaptchaInterop: 7d1a4a01a6b2cb1610a47ef3f85f0c411434cb21
   shared_preferences_foundation: fcdcbc04712aee1108ac7fda236f363274528f78
-  url_launcher_ios: 5334b05cef931de560670eeae103fd3e431ac3fe
+  url_launcher_macos: 5f437abeda8c85500ceb03f5c1938a8c5a705399
 
-PODFILE CHECKSUM: 819463e6a0290f5a72f145ba7cde16e8b6ef0796
+PODFILE CHECKSUM: 236401fc2c932af29a9fcf0e97baeeb2d750d367
 
 COCOAPODS: 1.15.2

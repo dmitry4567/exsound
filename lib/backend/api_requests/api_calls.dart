@@ -14,6 +14,10 @@ class CustomInterceptors extends InterceptorsWrapper {
   @override
   onRequest(RequestOptions options, RequestInterceptorHandler handler) async {
     options.headers['Content-Type'] = 'application/json';
+    
+    if (ffAppState.userAuthToken != "") {
+      options.headers['authorization'] = 'Bearer ${ffAppState.userAuthToken}';
+    }
 
     return handler.next(options);
   }
@@ -21,57 +25,41 @@ class CustomInterceptors extends InterceptorsWrapper {
   @override
   onError(DioError err, ErrorInterceptorHandler handler) async {
     if (err.response?.statusCode == 400) {
-      try {
-        var pathToFunction = '/auth/refresh';
+      var pathToFunction = '/auth/refresh';
 
-        var result = await dioClient.post(pathToFunction,
-            data: '''{"refresh_token": "${ffAppState.refreshToken}"}''');
-
+      dioClient.post(pathToFunction,
+          data:
+              '''{"refresh_token": "${ffAppState.refreshToken}"}''').then(
+          (result) async {
         Map<String, dynamic> data = jsonDecode(jsonEncode(result.data));
 
         if (result.statusCode == 201) {
-          ffAppState.setRefreshToken(data["refresh_token"]);
-          ffAppState.setUserAuthToken(data["access_token"]);
+          err.requestOptions.headers["Authorization"] =
+              "Bearer " + data["refresh_token"];
+
+          await ffAppState.setRefreshToken(data["refresh_token"]);
+          await ffAppState.setUserAuthToken(data["access_token"]);
+
+          final opts = new Options(
+              method: err.requestOptions.method,
+              headers: err.requestOptions.headers);
+
+          final cloneReq = await api.request(err.requestOptions.path,
+              options: opts,
+              data: err.requestOptions.data,
+              queryParameters: err.requestOptions.queryParameters);
+
+          return handler.resolve(cloneReq);
         }
-
-        await _getRetryRequest(err);
-      } catch (e) {}
+      });
     }
-    return handler.next(err);
-  }
-
-  Future<Response> _getRetryRequest(DioError err) async {
-    final requestOptions = err.response!.requestOptions;
-
-    final options = Options(
-      method: requestOptions.method,
-      headers: requestOptions.headers,
-    );
-
-    final dioRefresh = Dio(
-      BaseOptions(
-        baseUrl: requestOptions.baseUrl,
-        headers: <String, String>{'Content-Type': 'application/json'},
-      ),
-    );
-
-    dioRefresh.interceptors.add(this);
-
-    final response = await dioRefresh.request<dynamic>(
-      requestOptions.path,
-      data: requestOptions.data,
-      queryParameters: requestOptions.queryParameters,
-      options: options,
-    );
-
-    return response;
   }
 }
 
 final dioClient = Dio(
   BaseOptions(
     // baseUrl: "http://172.20.10.5:3000/api",
-    baseUrl: "http://192.168.0.109:3000/api",
+    baseUrl: "http://localhost:3000/api",
     connectTimeout: 30000,
     receiveTimeout: 3000,
   ),
@@ -219,7 +207,6 @@ class GetTypes {
     );
   }
 }
-
 
 class GetAdmins {
   static Future<ApiCallResponse> call({

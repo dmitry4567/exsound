@@ -3,7 +3,6 @@ import 'package:exstudio/backend/api_requests/api_calls.dart';
 import 'package:exstudio/flutter_flow/flutter_flow_util.dart';
 import 'package:exstudio/main.dart';
 import 'package:equatable/equatable.dart';
-import '../../flutter_flow/custom_functions.dart' as functions;
 
 part 'register_event.dart';
 part 'register_state.dart';

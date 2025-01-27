@@ -198,7 +198,7 @@ class GetTypes {
 
     return ApiManager.instance.makeApiCall(
       apiPath: '/type-of-activity/all',
-      callType: ApiCallType.POST,
+      callType: ApiCallType.GET,
       params: {},
       body: body,
       bodyType: BodyType.JSON,

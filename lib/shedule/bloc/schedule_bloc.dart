@@ -20,12 +20,13 @@ class ScheduleBloc extends Bloc<ScheduleEvent, ScheduleState> {
 
       if (data.succeeded) {
         if (data.jsonBody.isEmpty) {
-          emit(ScheduleDataEmpty());
+          emit(const ScheduleDataEmpty());
         } else {
           List<StudioSessions> sessions = List<StudioSessions>.from(data
               .jsonBody
               .map((project) => StudioSessions.fromJson(project))
               .toList());
+          print(sessions);
           emit(ScheduleDataPass(sessions));
         }
       } else {

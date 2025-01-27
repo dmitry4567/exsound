@@ -15,7 +15,7 @@ import 'flutter_flow/flutter_flow_util.dart';
 import 'flutter_flow/internationalization.dart';
 import 'firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'dart:io' show Platform;
+import 'package:universal_io/io.dart' show Platform;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -38,11 +38,11 @@ Future<void> main() async {
 
   FirebaseMessaging messaging = FirebaseMessaging.instance;
 
-  if (Platform.isAndroid) {
-    messaging.getToken().then((value) {
-      print("Firebase Messaging Token: $value");
-    });
-  }
+  // if (Platform.isAndroid) {
+  //   messaging.getToken().then((value) {
+  //     print("Firebase Messaging Token: $value");
+  //   });
+  // }
 
   FirebaseMessaging.onMessage.listen((RemoteMessage event) {
     print("message received: ${event}");

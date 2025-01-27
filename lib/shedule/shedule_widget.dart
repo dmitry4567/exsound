@@ -22,6 +22,7 @@ class _SheduleWidgetState extends State<SheduleWidget> {
 
   DateTime _focusedDay = DateTime.now();
   DateTime _selectedDay = DateTime.now();
+
   CalendarFormat _calendarFormat = CalendarFormat.month;
 
   Future<dynamic> getData() async {
@@ -61,9 +62,12 @@ class _SheduleWidgetState extends State<SheduleWidget> {
     DateTime startDate =
         DateTime(_selectedDay.year, _selectedDay.month, _selectedDay.day);
 
-    context.read<ScheduleBloc>().add(ScheduleGetData(
-        startDate.millisecondsSinceEpoch,
-        startDate.add(Duration(days: 1)).millisecondsSinceEpoch - 1));
+    context.read<ScheduleBloc>().add(
+          ScheduleGetData(
+            startDate.millisecondsSinceEpoch,
+            startDate.add(Duration(days: 1)).millisecondsSinceEpoch - 1,
+          ),
+        );
   }
 
   @override
@@ -114,8 +118,8 @@ class _SheduleWidgetState extends State<SheduleWidget> {
                             ),
                             child: TableCalendar(
                               daysOfWeekVisible: false,
-                              firstDay: DateTime(1947),
-                              lastDay: DateTime(2030),
+                              firstDay: DateTime(2025),
+                              lastDay: DateTime(2050),
                               focusedDay: _focusedDay,
                               calendarFormat: _calendarFormat,
                               selectedDayPredicate: (day) {
@@ -127,14 +131,16 @@ class _SheduleWidgetState extends State<SheduleWidget> {
                                     _selectedDay = selectedDay;
                                     _focusedDay = focusedDay;
                                   });
-
+                                  // Отправляем событие BLoC для загрузки данных
                                   context.read<ScheduleBloc>().add(
-                                      ScheduleGetData(
+                                        ScheduleGetData(
                                           selectedDay.millisecondsSinceEpoch,
                                           selectedDay
                                                   .add(Duration(days: 1))
                                                   .millisecondsSinceEpoch -
-                                              1));
+                                              1,
+                                        ),
+                                      );
                                 }
                               },
                               onFormatChanged: (format) {
@@ -144,6 +150,25 @@ class _SheduleWidgetState extends State<SheduleWidget> {
                                   });
                                 }
                               },
+                              // calendarBuilders: CalendarBuilders(
+                              //   selectedBuilder: (context, day, focusedDay) {
+                              //     return Padding(
+                              //       padding: const EdgeInsets.symmetric(
+                              //         horizontal: 4,
+                              //       ),
+                              //       child: Center(
+                              //         child: Text(
+                              //           day.day.toString(),
+                              //           style: TextStyle(
+                              //             fontFamily: 'BebasNeue',
+                              //             fontSize: 20,
+                              //             color: Color(0xff8D40FF),
+                              //           ),
+                              //         ),
+                              //       ),
+                              //     );
+                              //   },
+                              // ),
                               onPageChanged: (focusedDay) {
                                 _focusedDay = focusedDay;
                               },
